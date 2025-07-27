@@ -175,7 +175,7 @@ def users_user_r30_get(user, user_id):
 
     with Connect() as c:
         p = Potential(c, UserInfo(c, user_id))
-        return success_return({'user_id': user_id, 'r10_ptt': p.recent_10 / 10, 'data': p.recent_30_to_dict_list()})
+        return success_return({'user_id': user_id, 'r10_ptt': p.recent_n(10) / 10, 'data': p.recent_30_to_dict_list()})
 
 
 @bp.route('/<int:user_id>/role', methods=['GET'])
