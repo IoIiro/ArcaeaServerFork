@@ -178,7 +178,7 @@ def generate_log_file_dict(level: str, filename: str) -> dict:
     }
 
 
-def main():
+def pre_main():
     log_dict = {
         'version': 1,
         'root': {
@@ -216,6 +216,8 @@ def main():
         input('Press ENTER key to exit.')
         sys.exit()
 
+
+def main():
     if Config.LINKPLAY_HOST and Config.SET_LINKPLAY_SERVER_AS_SUB_PROCESS:
         from linkplay_server import link_play
         process = [Process(target=link_play, args=(
@@ -230,6 +232,9 @@ def main():
     else:
         tcp_server_run()
 
+
+# must run for init
+pre_main()
 
 if __name__ == '__main__':
     set_start_method("spawn")
