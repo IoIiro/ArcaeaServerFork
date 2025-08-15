@@ -85,9 +85,12 @@ class SonglistParser:
                 if i['ratingClass'] == 3 and i.get('audioOverride', False):
                     r |= 64
                 r |= 1 << i['ratingClass']
-        else:
-            if any(i['ratingClass'] == 3 for i in song.get('difficulties', [])):
-                r |= 8
+        else: # 針對remote_dl為False時BYD難度強制下載的處理
+            for i in song.get('difficulties', []):
+                if i['ratingClass'] == 3:
+                    r |= 8
+                    if i.get('audioOverride', False):
+                        r |= 64
 
         for extra_file in song.get('additional_files', []):
             x = extra_file['file_name']
