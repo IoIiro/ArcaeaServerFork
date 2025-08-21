@@ -680,11 +680,9 @@ class UserStamina(Stamina):
         self.user = user
 
     def select(self):
-        """获取用户体力信息"""
-        self.c.execute(
-            """select max_stamina_ts, staminafrom user where user_id = :a""",
-            {"a": self.user.user_id},
-        )
+        '''获取用户体力信息'''
+        self.c.execute('''select max_stamina_ts, stamina from user where user_id = :a''',
+                       {'a': self.user.user_id})
         x = self.c.fetchone()
         if not x:
             raise NoData("The user does not exist.")
