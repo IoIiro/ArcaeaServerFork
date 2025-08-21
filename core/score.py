@@ -247,6 +247,7 @@ class UserPlay(UserScore):
         self.combo_interval_bonus: int = None  # 不能给 None 以外的默认值
         self.hp_interval_bonus: int = None  # 不能给 None 以外的默认值
         self.fever_bonus: int = None  # 不能给 None 以外的默认值
+        self.rank_bonus: int = None  # 不能给 None 以外的默认值
         self.skill_cytusii_flag: str = None
         self.skill_chinatsu_flag: str = None
         self.highest_health: int = None
@@ -300,6 +301,9 @@ class UserPlay(UserScore):
 
         if self.fever_bonus is not None and (self.fever_bonus < 0 or self.fever_bonus > self.perfect_count * 5):
             # fever 等级最高为 5
+            return False
+
+        if self.rank_bonus is not None and (self.rank_bonus < 0 or self.rank_bonus > 4):
             return False
 
         y = f'{self.user.user_id}{self.song_hash}'

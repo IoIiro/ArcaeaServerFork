@@ -739,6 +739,7 @@ class WorldSkillMixin:
             "skill_kanae_uncap": self._skill_kanae_uncap,
             "skill_eto_hoppe": self._skill_eto_hoppe,
             "skill_intruder": self._skill_intruder,
+            'skill_nonoka_uncap': self._skill_nonoka_uncap,
         }
         if self.character_used.skill_id_displayed in factory_dict:
             factory_dict[self.character_used.skill_id_displayed]()
@@ -963,6 +964,17 @@ class WorldSkillMixin:
             return
 
         self.character_bonus_progress_normalized = self.user_play.fever_bonus / 1000
+
+    def _skill_nonoka_uncap(self) -> None:
+        '''
+        nonoka 觉醒技能，技能等级 * 10% 的世界进度奖励
+        '''
+        if self.user_play.rank_bonus is None:
+            return
+
+        self.character_bonus_progress_normalized = self.user_play.rank_bonus * \
+            0.1 * self.progress_normalized
+        self.user.current_map.reclimb(self.final_progress)
 
 
 class BaseWorldPlay(WorldSkillMixin):

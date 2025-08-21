@@ -132,6 +132,8 @@ def song_score_post(user_id):
         # visible_map_count
         if 'fever_bonus' in request.form:
             x.fever_bonus = int(request.form['fever_bonus'])
+        if 'rank_bonus' in request.form:
+            x.rank_bonus = int(request.form['rank_bonus'])
         x.highest_health = request.form.get("highest_health", type=int)
         x.lowest_health = request.form.get("lowest_health", type=int)
         if not x.is_valid:
