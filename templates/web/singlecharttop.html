@@ -15,6 +15,7 @@
         <option value="1">Present</option>
         <option value="2">Future</option>
         <option value="3">Beyond</option>
+        <option value="4">Eternal</option>
     </select>
     <br />
     <input type="submit" value="Find">
@@ -33,6 +34,8 @@
         <span class="difficulty_prs">PRS</span>
         {% elif difficulty == 2 %}
         <span class="difficulty_ftr">FTR</span>
+        {% elif difficulty == 4 %}
+        <span class="difficulty_etr">ETR</span>
         {% else %}
         <span class="difficulty_byd">BYD</span>
 

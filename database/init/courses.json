@@ -337,8 +337,13 @@
             }
         ],
         "gauge_requirement": "default",
-        "requirements": [],
-        "flag_as_hidden_when_requirements_not_met": false,
+        "requirements": [
+            {
+                "value": "4.0-dan-8",
+                "type": "course"
+            }
+        ],
+        "flag_as_hidden_when_requirements_not_met": true,
         "dan_name": "Phase 9",
         "course_name": "Ego's Demise",
         "can_start": true,
@@ -356,29 +361,34 @@
         "style": 10,
         "songs": [
             {
-                "flag_as_hidden": false,
+                "flag_as_hidden": true,
                 "difficulty": 2,
                 "id": "cyaegha"
             },
             {
-                "flag_as_hidden": false,
+                "flag_as_hidden": true,
                 "difficulty": 2,
                 "id": "divinelight"
             },
             {
-                "flag_as_hidden": false,
+                "flag_as_hidden": true,
                 "difficulty": 2,
                 "id": "dantalion"
             },
             {
-                "flag_as_hidden": false,
+                "flag_as_hidden": true,
                 "difficulty": 2,
                 "id": "aegleseeker"
             }
         ],
         "gauge_requirement": "default",
-        "requirements": [],
-        "flag_as_hidden_when_requirements_not_met": false,
+        "requirements": [
+            {
+                "value": "4.0-dan-9",
+                "type": "course"
+            }
+        ],
+        "flag_as_hidden_when_requirements_not_met": true,
         "dan_name": "Phase 10",
         "course_name": "A Torrent of Light and Conflict",
         "can_start": true,
@@ -396,29 +406,34 @@
         "style": 11,
         "songs": [
             {
-                "flag_as_hidden": false,
+                "flag_as_hidden": true,
                 "difficulty": 3,
                 "id": "infinitestrife"
             },
             {
-                "flag_as_hidden": false,
+                "flag_as_hidden": true,
                 "difficulty": 2,
                 "id": "grievouslady"
             },
             {
-                "flag_as_hidden": false,
+                "flag_as_hidden": true,
                 "difficulty": 2,
                 "id": "fractureray"
             },
             {
-                "flag_as_hidden": false,
+                "flag_as_hidden": true,
                 "difficulty": 3,
                 "id": "tempestissimo"
             }
         ],
         "gauge_requirement": "default",
-        "requirements": [],
-        "flag_as_hidden_when_requirements_not_met": false,
+        "requirements": [
+            {
+                "value": "4.0-dan-10",
+                "type": "course"
+            }
+        ],
+        "flag_as_hidden_when_requirements_not_met": true,
         "dan_name": "Phase 11",
         "course_name": "Radiant Genesis",
         "can_start": true,
@@ -432,33 +447,38 @@
         ]
     },
     {
-        "course_id": "4.0-dan-12",
+        "course_id": "6.0-dan-12",
         "style": 12,
         "songs": [
             {
-                "flag_as_hidden": false,
+                "flag_as_hidden": true,
                 "difficulty": 2,
                 "id": "abstrusedilemma"
             },
             {
-                "flag_as_hidden": false,
+                "flag_as_hidden": true,
                 "difficulty": 3,
                 "id": "worldender"
             },
             {
-                "flag_as_hidden": false,
+                "flag_as_hidden": true,
                 "difficulty": 4,
                 "id": "alterego"
             },
             {
-                "flag_as_hidden": false,
+                "flag_as_hidden": true,
                 "difficulty": 3,
                 "id": "designant"
             }
         ],
         "gauge_requirement": "default",
-        "requirements": [],
-        "flag_as_hidden_when_requirements_not_met": false,
+        "requirements": [
+            {
+                "value": "4.0-dan-11",
+                "type": "course"
+            }
+        ],
+        "flag_as_hidden_when_requirements_not_met": true,
         "dan_name": "Phase 12",
         "course_name": "Irruption of New Color",
         "can_start": true,

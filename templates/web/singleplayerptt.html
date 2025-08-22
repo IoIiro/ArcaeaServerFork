@@ -44,6 +44,8 @@
                     <span class="difficulty_prs">PRS</span>
                     {% elif user['difficulty'] == 2 %}
                     <span class="difficulty_ftr">FTR</span>
+                    {% elif user['difficulty'] == 4 %}
+                    <span class="difficulty_etr">ETR</span>
                     {% else %}
                     <span class="difficulty_byd">BYD</span>
                     {% endif %}
@@ -176,6 +178,8 @@
         <span class="difficulty_prs">PRS</span>
         {% elif i['difficulty'] == 2 %}
         <span class="difficulty_ftr">FTR</span>
+        {% elif i['difficulty'] == 4 %}
+        <span class="difficulty_etr">ETR</span>
         {% else %}
         <span class="difficulty_byd">BYD</span>
         {% endif %}
