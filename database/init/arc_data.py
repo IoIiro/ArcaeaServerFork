@@ -71,7 +71,7 @@ class InitData:
         89: [{'core_id': 'core_hollow', 'amount': 5}, {'core_id': 'core_alluring', 'amount': 25}],
     }
 
-    cores = ['core_hollow', 'core_desolate', 'core_chunithm', 'core_crimson',
+    cores = ['core_hollow', 'core_desolate', 'core_chunithm', 'core_crimson', 'core_alluring',
              'core_ambivalent', 'core_scarlet', 'core_groove', 'core_generic', 'core_binary', 'core_colorful', 'core_course_skip_purchase', 'core_umbral', 'core_wacca', 'core_sunset', 'core_tanoc', 'core_serene', 'core_maimai']
 
     world_songs = ["babaroque", "shadesoflight", "kanagawa", "lucifer", "anokumene", "ignotus", "rabbitintheblackroom", "qualia", "redandblue", "bookmaker", "darakunosono", "espebranch", "blacklotus", "givemeanightmare", "vividtheory", "onefr", "gekka", "vexaria3", "infinityheaven3", "fairytale3", "goodtek3", "suomi", "rugie", "faintlight", "harutopia", "goodtek", "dreaminattraction", "syro", "diode", "freefall", "grimheart", "blaster",

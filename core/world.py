@@ -974,7 +974,7 @@ class WorldSkillMixin:
 
         self.character_bonus_progress_normalized = self.user_play.rank_bonus * \
             0.1 * self.progress_normalized
-        self.user.current_map.reclimb(self.final_progress)
+        self.user.current_map.reclimb(self.final_progress, self.user_play)
 
 
 class BaseWorldPlay(WorldSkillMixin):
