@@ -975,7 +975,15 @@ class WorldSkillMixin:
         self.character_bonus_progress_normalized = self.user_play.rank_bonus * \
             0.1 * self.progress_normalized
         self.user.current_map.reclimb(self.final_progress, self.user_play)
-
+        
+    def _skill_vita_arc(self) -> None:
+        '''
+            vita 技能 2 far 会减少 1 over
+        '''
+        x = self.user_play.near_count // 2
+        over = self.character_used.overdrive.get_value(
+            self.character_used.level)
+        self.over_skill_increase = -min(x, over)
 
 class BaseWorldPlay(WorldSkillMixin):
     """
@@ -1307,11 +1315,15 @@ class BeyondWorldPlay(BaseWorldPlay):
 
     @property
     def progress_normalized(self) -> float:
+        return self.base_progress * self.partner_multiply * self.affinity_multiplier
+
+    @property
+    def partner_multiply(self) -> float:
         overdrive = self.character_used.overdrive_value
         if self.over_skill_increase:
             overdrive += self.over_skill_increase
 
-        return self.base_progress * (overdrive / 50) * self.affinity_multiplier
+        return overdrive / 50
 
     def to_dict(self) -> dict:
         r = super().to_dict()
@@ -1321,7 +1333,7 @@ class BeyondWorldPlay(BaseWorldPlay):
             self.progress_normalized * self.user_play.fragment_multiply / 100
         )
 
-        # r['partner_multiply'] = self.affinity_multiplier  # ?
+        r['partner_multiply'] = self.affinity_multiplier
 
         if self.over_skill_increase is not None:
             r["char_stats"]["over_skill_increase"] = self.over_skill_increase

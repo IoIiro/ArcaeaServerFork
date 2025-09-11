@@ -129,7 +129,6 @@ def song_score_post(user_id):
             x.combo_interval_bonus = int(request.form['combo_interval_bonus'])
         if 'hp_interval_bonus' in request.form:
             x.hp_interval_bonus = int(request.form['hp_interval_bonus'])
-        # visible_map_count
         if 'fever_bonus' in request.form:
             x.fever_bonus = int(request.form['fever_bonus'])
         if 'rank_bonus' in request.form:

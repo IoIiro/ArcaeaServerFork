@@ -81,7 +81,7 @@ def users_user_get(user, user_id):
 
 @bp.route('/<int:user_id>', methods=['PUT'])
 @role_required(request, ['change'])
-@request_json_handle(request, optional_keys=['name', 'password', 'user_code', 'ticket', 'email'], must_change=True)
+@request_json_handle(request, optional_keys=['name', 'password', 'user_code', 'ticket', 'email', 'custom_banner'], must_change=True)
 @api_try
 def users_user_put(data, user, user_id):
     '''修改一个用户'''
@@ -110,6 +110,11 @@ def users_user_put(data, user, user_id):
                 raise InputError('Ticket must be int')
             u.ticket = data['ticket']
             r['ticket'] = u.ticket
+        if 'custom_banner' in data:
+            if not isinstance(data['custom_banner'], str):
+                raise InputError('Value `custom_banner` must be str')
+            u.custom_banner = data['custom_banner']
+            r['custom_banner'] = u.custom_banner
         u.update_columns(d=r)
         return success_return(r)
 
