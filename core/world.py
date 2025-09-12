@@ -717,6 +717,7 @@ class WorldSkillMixin:
             "skill_salt": self._skill_salt,
             'skill_hikari_selene': self._skill_hikari_selene,
             'skill_nami_sui': self._skill_nami_sui,
+            'skill_vita_arc': self._skill_vita_arc,
         }
         if (
             self.user_play.beyond_gauge == 0
