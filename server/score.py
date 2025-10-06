@@ -133,6 +133,8 @@ def song_score_post(user_id):
             x.fever_bonus = int(request.form['fever_bonus'])
         if 'rank_bonus' in request.form:
             x.rank_bonus = int(request.form['rank_bonus'])
+        if 'maya_gauge' in request.form:
+            x.maya_gauge = int(request.form['maya_gauge'])
         x.highest_health = request.form.get("highest_health", type=int)
         x.lowest_health = request.form.get("lowest_health", type=int)
         if not x.is_valid:

@@ -718,6 +718,7 @@ class WorldSkillMixin:
             'skill_hikari_selene': self._skill_hikari_selene,
             'skill_nami_sui': self._skill_nami_sui,
             'skill_vita_arc': self._skill_vita_arc,
+            'skill_maya_uncap': self._skill_maya_uncap,
         }
         if (
             self.user_play.beyond_gauge == 0
@@ -985,6 +986,17 @@ class WorldSkillMixin:
         over = self.character_used.overdrive.get_value(
             self.character_used.level)
         self.over_skill_increase = -min(x, over)
+        
+    def _skill_maya_uncap(self) -> None:
+        '''
+        maya 觉醒技能，歌曲游玩抵达全曲 1/4 进度时，回忆率将全部转化为角色能力加成 stat bonus
+        '''
+        if self.user_play.maya_gauge is None:
+            return
+        if self.user_play.maya_gauge >= 0:
+            self.over_skill_increase = self.user_play.maya_gauge
+            self.prog_skill_increase = self.user_play.maya_gauge
+
 
 class BaseWorldPlay(WorldSkillMixin):
     """
