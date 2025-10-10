@@ -410,6 +410,17 @@ class UserCharacter(Character):
         self.is_uncapped = True
         self.is_uncapped_override = False
 
+    # Used for Maya-stinky
+    def character_force_uncap(self, user=None):
+        if user:
+            self.user = user
+
+        self.c.execute('''update user_char set is_uncapped=1, is_uncapped_override=0 where user_id=? and character_id=?''',
+                       (self.user.user_id, self.character_id))
+
+        self.is_uncapped = True
+        self.is_uncapped_override = False
+
     def upgrade(self, user=None, exp_addition: float = 0) -> None:
         # parameter: user - User类或子类的实例
         # 升级角色
