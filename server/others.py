@@ -124,19 +124,19 @@ def insight_complete(user_id, pack_id):
             'insight_state': u.insight_state
         })
     
+
 @bp.route('/unlock/me/awaken_maya', methods=['POST'])
 @auth_required(request)
 @arc_try
 def awaken_maya(user_id):
     with Connect() as c:
-        user = UserOnline(c, user_id)
-        character = UserCharacter(c, 71)
-        character.select_character_info(user)
-        character.character_force_uncap(user)
+        ch = UserCharacter(c, 71, UserOnline(c, user_id))
+        ch.select_character_info()
+        ch.character_uncap()
 
         return success_return({
-            'user_id': user.user_id,
-            'updated_characters': [character.to_dict()]
+            'user_id': user_id,
+            'updated_characters': [ch.to_dict()]
         })
 
 
