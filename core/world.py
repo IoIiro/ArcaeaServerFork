@@ -719,6 +719,7 @@ class WorldSkillMixin:
             'skill_nami_sui': self._skill_nami_sui,
             'skill_vita_arc': self._skill_vita_arc,
             'skill_maya_uncap': self._skill_maya_uncap,
+            'skill_hikari_tairitsu_debut': self._skill_hikari_tairitsu_debut,
         }
         if (
             self.user_play.beyond_gauge == 0
@@ -996,6 +997,16 @@ class WorldSkillMixin:
         if self.user_play.maya_gauge >= 0:
             self.over_skill_increase = self.user_play.maya_gauge
             self.prog_skill_increase = self.user_play.maya_gauge
+
+    def _skill_hikari_tairitsu_debut(self) -> None:
+        '''
+        hikari & tairitsu 每日首次游玩 Next Stage 曲目时，角色所有能力数值 +20
+        '''
+        if self.user_play.nextstage_bonus is None:
+            return
+        if self.user_play.nextstage_bonus > 0:
+            self.over_skill_increase = 20
+            self.prog_skill_increase = 20
 
 
 class BaseWorldPlay(WorldSkillMixin):

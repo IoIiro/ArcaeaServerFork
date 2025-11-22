@@ -1060,5 +1060,23 @@
 		],
 		"orig_price": 700,
 		"price": 700
+	},
+	{
+		"name": "nextstage",
+		"items": [
+			{
+				"id": "nextstage",
+				"type": "pack",
+				"is_available": true
+			},
+			{
+				"id": "core_generic",
+				"type": "core",
+				"amount": 6,
+				"is_available": true
+			}
+		],
+		"orig_price": 600,
+		"price": 600
 	}
 ]

@@ -249,6 +249,7 @@ class UserPlay(UserScore):
         self.fever_bonus: int = None  # 不能给 None 以外的默认值
         self.rank_bonus: int = None  # 不能给 None 以外的默认值
         self.maya_gauge: int = None  # 不能给 None 以外的默认值
+        self.nextstage_bonus: int = None  # 不能给 None 以外的默认值
         self.skill_cytusii_flag: str = None
         self.skill_chinatsu_flag: str = None
         self.highest_health: int = None
