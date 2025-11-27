@@ -134,7 +134,7 @@ def awaken_maya(user_id):
         ch = UserCharacter(c, 71, UserOnline(c, user_id))
         ch.select_character_info()
         if not Config.CHARACTER_FULL_UNLOCK:
-            ch.character_uncap(ignore_full_unlock=True)
+            ch.character_uncap()
 
         return success_return({
             'user_id': user_id,
