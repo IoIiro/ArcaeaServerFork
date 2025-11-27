@@ -5,6 +5,7 @@ from flask import Blueprint, jsonify, request
 from werkzeug.datastructures import ImmutableMultiDict
 
 from core.bundle import BundleDownload
+from core.config_manager import Config
 from core.character import UserCharacter
 from core.download import DownloadList
 from core.error import ArcError, RateLimit
@@ -132,7 +133,8 @@ def awaken_maya(user_id):
     with Connect() as c:
         ch = UserCharacter(c, 71, UserOnline(c, user_id))
         ch.select_character_info()
-        ch.character_uncap(ignore_full_unlock=True)
+        if not Config.CHARACTER_FULL_UNLOCK:
+            ch.character_uncap(ignore_full_unlock=True)
 
         return success_return({
             'user_id': user_id,
