@@ -132,7 +132,7 @@ def awaken_maya(user_id):
     with Connect() as c:
         ch = UserCharacter(c, 71, UserOnline(c, user_id))
         ch.select_character_info()
-        ch.character_uncap()
+        ch.character_uncap(ignore_full_unlock=True)
 
         return success_return({
             'user_id': user_id,

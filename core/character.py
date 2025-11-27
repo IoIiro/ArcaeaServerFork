@@ -373,12 +373,17 @@ class UserCharacter(Character):
 
         self.is_uncapped_override = x[1] == 0
 
-    def character_uncap(self, user=None):
+    def character_uncap(self, user=None, ignore_full_unlock=False) -> None:
         # parameter: user - User类或子类的实例
         # 觉醒角色
         if user:
             self.user = user
         if Config.CHARACTER_FULL_UNLOCK:
+            if ignore_full_unlock:
+                self.is_uncapped = True
+                self.is_uncapped_override = False
+                return
+
             # 全解锁了你觉醒个鬼啊
             raise ArcError('All characters are available.')
 
