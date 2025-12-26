@@ -11,7 +11,6 @@ class Config:
     USE_CORS = False
 
     SONG_FILE_HASH_PRE_CALCULATE = True
-    ALLOW_HASH_MISMATCH = False
 
     GAME_API_PREFIX = ['/autumntrain/37', '/']  # str | list[str]
     OLD_GAME_API_PREFIX = []  # str | list[str]

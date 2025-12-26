@@ -10,7 +10,7 @@ PADDING = [b(i) * i for i in range(16)] + [b'']
 class CommandSender:
 
     PROTOCOL_NAME = b'\x06\x16'
-    PROTOCOL_VERSION = b'\x0D'
+    PROTOCOL_VERSION = b'\x0E'
 
     def __init__(self, room: Room = None) -> None:
         self.room = room

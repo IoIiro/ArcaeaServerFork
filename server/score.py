@@ -116,29 +116,30 @@ def score_token_course(user_id):
 def song_score_post(user_id):
     with Connect() as c:
         x = UserPlay(c, UserOnline(c, user_id))
+        f = request.form
         x.nell_toggle = request.args.get("nell_toggle",type=bool)
-        x.song_token = request.form['song_token']
-        x.song_hash = request.form['song_hash']
-        x.song.set_chart(
-            request.form['song_id'], request.form['difficulty'])
-        x.set_score(request.form['score'], request.form['shiny_perfect_count'], request.form['perfect_count'], request.form['near_count'],
-                    request.form['miss_count'], request.form['health'], request.form['modifier'], int(time() * 1000), request.form['clear_type'])
-        x.beyond_gauge = int(request.form['beyond_gauge'])
-        x.submission_hash = request.form['submission_hash']
-        if 'combo_interval_bonus' in request.form:
-            x.combo_interval_bonus = int(request.form['combo_interval_bonus'])
-        if 'hp_interval_bonus' in request.form:
-            x.hp_interval_bonus = int(request.form['hp_interval_bonus'])
-        if 'fever_bonus' in request.form:
-            x.fever_bonus = int(request.form['fever_bonus'])
-        if 'rank_bonus' in request.form:
-            x.rank_bonus = int(request.form['rank_bonus'])
-        if 'maya_gauge' in request.form:
-            x.maya_gauge = int(request.form['maya_gauge'])
-        if 'nextstage_bonus' in request.form:
-            x.nextstage_bonus = int(request.form['nextstage_bonus'])
-        x.highest_health = request.form.get("highest_health", type=int)
-        x.lowest_health = request.form.get("lowest_health", type=int)
+        
+        x.song_token = f['song_token']
+        x.song_hash = f['song_hash']
+        x.song.set_chart(f['song_id'], f['difficulty'])
+        x.set_score(f['score'], f['shiny_perfect_count'], f['perfect_count'], f['near_count'],
+                    f['miss_count'], f['health'], f['modifier'], int(time() * 1000), f['clear_type'])
+        x.beyond_gauge = int(f['beyond_gauge'])
+        x.submission_hash = f['submission_hash']
+        x.combo_interval_bonus = f.get('combo_interval_bonus', type=int)
+        x.hp_interval_bonus = f.get('hp_interval_bonus', type=int)
+        
+        # visible_map_count
+        x.fever_bonus = f.get('fever_bonus', type=int)
+        x.rank_bonus = f.get('rank_bonus', type=int)
+        x.maya_gauge = f.get('maya_gauge', type=int)
+        x.nextstage_bonus = f.get('nextstage_bonus', type=int)
+        x.highest_health = f.get("highest_health", type=int)
+        x.lowest_health = f.get("lowest_health", type=int)
+        x.room_code = f.get('room_code')
+        x.room_total_score = f.get('room_total_score', type=int)
+        x.room_total_players = f.get('room_total_players', type=int)
+        
         if not x.is_valid:
             raise InputError('Invalid score.', 107)
         x.upload_score()

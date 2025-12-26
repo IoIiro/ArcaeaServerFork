@@ -254,6 +254,11 @@ class UserPlay(UserScore):
         self.skill_chinatsu_flag: str = None
         self.highest_health: int = None
         self.lowest_health: int = None
+        
+        # room score
+        self.room_code: str = None
+        self.room_total_score: int = None
+        self.room_total_players: int = None
 
         self.invasion_flag: int = None  # 1: invasion_start, 2: invasion_hard
         self.nell_toggle: bool = False

@@ -179,6 +179,7 @@ class Map:
 
         self.disable_over: bool = None
         self.new_law: str = None
+        self.is_linkplay_allowed: bool = None
 
         self.overwrite_steps: list = None
         self.steps_modified: bool = None
@@ -246,6 +247,10 @@ class Map:
             r["new_law"] = self.new_law
         if self.requires_any:
             r["requires_any"] = self.requires_any
+        if self.requires:
+            r['requires'] = self.requires
+        if self.is_linkplay_allowed:
+            r['is_linkplay_allowed'] = self.is_linkplay_allowed
         return r
 
     def from_dict(self, raw_dict: dict) -> "Map":
@@ -277,7 +282,7 @@ class Map:
         )
 
         self.requires = raw_dict.get("requires")
-
+        self.is_linkplay_allowed = raw_dict.get('is_linkplay_allowed', False)
         self.disable_over = raw_dict.get("disable_over")
         self.new_law = raw_dict.get("new_law")
         self.requires_any = raw_dict.get("requires_any")
@@ -1061,6 +1066,7 @@ class BaseWorldPlay(WorldSkillMixin):
             # 'wpaid': 'helloworld',  # world play id ???
             "progress_before_sub_boost": self.final_progress,
             "progress_sub_boost_amount": 0,
+            'partner_multiply': self.partner_multiply,
             # 'subscription_multiply'
         }
 
@@ -1079,6 +1085,15 @@ class BaseWorldPlay(WorldSkillMixin):
             r["fragment_multiply"] = self.user_play.fragment_multiply
         if self.user_play.prog_boost_multiply != 0:  # 源韵强化
             r["prog_boost_multiply"] = self.user_play.prog_boost_multiply
+            
+            # progress_linkplay_boost_amount
+            # linkplay_boost
+            # progress_before_linkplay_boost
+        if arcmap.is_linkplay_allowed:
+            r['linkplay_boost'] = self.linkplay_boost  # 同步率
+            r['progress_before_linkplay_boost'] = self.progress_before_linkplay_boost
+            r['progress_linkplay_boost_amount'] = self.progress_before_linkplay_boost * \
+                (self.linkplay_boost - 1) * self.step_times
 
         return r
 
@@ -1112,6 +1127,32 @@ class BaseWorldPlay(WorldSkillMixin):
     @property
     def final_progress(self) -> float:
         raise NotImplementedError
+    
+    @property
+    def partner_multiply(self) -> float:
+        raise NotImplementedError
+
+    @property
+    def progress_before_linkplay_boost(self) -> float:
+        return self.progress_normalized
+
+    @property
+    def linkplay_boost(self) -> float:
+        if not self.user.current_map.is_linkplay_allowed:
+            return 1.0
+        score = self.user_play.room_total_score
+        player_count = self.user_play.room_total_players
+        if score and player_count:
+            if player_count >= 4:
+                factor = 80_000_000
+            elif player_count == 3:
+                factor = 100_000_000
+            elif player_count == 2:
+                factor = 200_000_000
+            else:
+                return 1.0
+            return 1 + score / factor
+        return 1.0
 
     def before_update(self) -> None:
         if self.user_play.prog_boost_multiply != 0:
@@ -1248,12 +1289,11 @@ class WorldPlay(BaseWorldPlay):
 
     @property
     def final_progress(self) -> float:
-        return (
-            (self.progress_normalized + (self.character_bonus_progress_normalized or 0))
-            * self.step_times
-            + (self.kanae_added_progress or 0)
-            - (self.kanae_stored_progress or 0)
-        )
+        return self.progress_before_linkplay_boost * self.linkplay_boost * self.step_times + (self.kanae_added_progress or 0) - (self.kanae_stored_progress or 0)
+
+    @property
+    def progress_before_linkplay_boost(self) -> float:
+        return self.progress_normalized + (self.character_bonus_progress_normalized or 0)
 
     @property
     def partner_adjusted_prog(self) -> float:
@@ -1265,8 +1305,12 @@ class WorldPlay(BaseWorldPlay):
         return prog
 
     @property
+    def partner_multiply(self) -> float:
+        return self.partner_adjusted_prog / 50
+
+    @property
     def progress_normalized(self) -> float:
-        return self.base_progress * (self.partner_adjusted_prog / 50)
+        return self.base_progress * self.partner_multiply
 
     def after_update(self) -> None:
         """世界模式更新"""
