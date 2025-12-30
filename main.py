@@ -25,7 +25,7 @@ if Config.DEPLOY_MODE == 'gevent':
 
 import sys
 from logging.config import dictConfig
-from multiprocessing import Process, set_start_method
+from multiprocessing import Process, current_process, set_start_method
 from traceback import format_exc
 
 from flask import Flask, make_response, request, send_from_directory
@@ -234,7 +234,9 @@ def main():
 
 
 # must run for init
-pre_main()
+# this ensures avoiding duplicate init logs for some reason
+if current_process().name == 'MainProcess':
+    pre_main()
 
 if __name__ == '__main__':
     set_start_method("spawn")
