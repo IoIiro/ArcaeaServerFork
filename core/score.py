@@ -293,7 +293,8 @@ class UserPlay(UserScore):
         from .download import get_song_file_md5
         songfile_hash = get_song_file_md5(
             self.song.song_id, str(self.song.difficulty) + '.aff')
-        if songfile_hash and songfile_hash != self.song_hash:
+
+        if Config.SONG_HASH_CHECKS and songfile_hash and songfile_hash != self.song_hash:
             return False
 
         x = f'''{self.song_token}{self.song_hash}{self.song.song_id}{self.song.difficulty}{self.score}{self.shiny_perfect_count}{
@@ -316,7 +317,7 @@ class UserPlay(UserScore):
         y = f'{self.user.user_id}{self.song_hash}'
         checksum = md5(x+md5(y))
 
-        if checksum != self.submission_hash:
+        if Config.SONG_HASH_CHECKS and checksum != self.submission_hash:
             return False
 
         return True
@@ -557,13 +558,18 @@ class Potential:
 
     @property
     def value(self) -> float:
-        '''计算用户潜力值'''
-        return self.best_30 * Constant.BEST30_WEIGHT + self.recent_10 * Constant.RECENT10_WEIGHT
+        total = 0
 
-    @property
-    def best_30(self) -> float:
-        '''获取用户best30的总潜力值'''
-        self.c.execute('''select rating from best_score where user_id = :a order by rating DESC limit 30''', {
+        for kind, amount, weight in Constant.PTT_FORMULA:
+            if kind == "recent":
+                total += weight * self.recent_n(amount)
+            elif kind == "best":
+                total += weight * self.best_n(amount)
+
+        return total
+
+    def best_n(self, n) -> float:
+        self.c.execute(f'''select rating from best_score where user_id = :a order by rating DESC limit {n}''', {
             'a': self.user.user_id})
         return sum(x[0] for x in self.c.fetchall())
 
@@ -588,8 +594,7 @@ class Potential:
             s.rating = x[-1]
             self.r30.append(s)
 
-    @property
-    def recent_10(self) -> float:
+    def recent_n(self, amount) -> float:
         '''获取用户recent10的总潜力值'''
         if self.r30_tuples is None:
             self.select_recent_30_tuple()
@@ -599,8 +604,8 @@ class Potential:
             if (x[1], x[2]) not in max_dict or max_dict[(x[1], x[2])] < x[3]:
                 max_dict[(x[1], x[2])] = x[3]
 
-        top_10_rating = sorted(max_dict.values(), reverse=True)[:10]
-        return sum(top_10_rating)
+        top_n_rating = sorted(max_dict.values(), reverse=True)[:amount]
+        return sum(top_n_rating)
 
     def recent_30_to_dict_list(self) -> list:
         if self.r30 is None:
