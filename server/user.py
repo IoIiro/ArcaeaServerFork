@@ -34,6 +34,8 @@ def register():
             device_id = request.form['device_id']
         else:
             device_id = 'low_version'
+        if 'is_allow_marketing_email' in request.form:
+            new_user.is_allow_marketing_email = request.form['is_allow_marketing_email'] == 'true'
 
         ip = request.remote_addr
         new_user.register(device_id, ip)
@@ -168,7 +170,7 @@ def sys_set(user_id, set_arg):
             user.change_favorite_character(int(value))
         else:
             value = 'true' == value
-            if set_arg in ('is_hide_rating', 'max_stamina_notification_enabled', 'mp_notification_enabled'):
+            if set_arg in ('is_hide_rating', 'max_stamina_notification_enabled', 'mp_notification_enabled', 'is_allow_marketing_email'):
                 user.update_user_one_column(set_arg, value)
         return success_return(user.to_dict())
 

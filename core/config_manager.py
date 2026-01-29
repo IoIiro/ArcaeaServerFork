@@ -103,6 +103,7 @@ class Config:
     DATABASE_INIT_PATH = './database/init/'
     SQLITE_LOG_DATABASE_PATH = './database/arcaea_log.db'
     SQLITE_DATABASE_DELETED_PATH = './database/arcaea_database_deleted.db'
+    LOG_FOLDER_PATH = './log/'
 
     GAME_LOGIN_RATE_LIMIT = '30/5 minutes'
     API_LOGIN_RATE_LIMIT = '10/5 minutes'

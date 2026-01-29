@@ -47,6 +47,8 @@ class User:
         self.world_rank_score: int = None
         self.ban_flag = None
 
+        self.is_allow_marketing_email = False
+
     @property
     def hash_pwd(self) -> str:
         '''`password`的SHA-256值'''
@@ -162,9 +164,9 @@ class UserRegister(User):
         self._insert_user_char()
 
         self.c.execute('''insert into user(user_id, name, password, join_date, user_code, rating_ptt,
-        character_id, is_skill_sealed, is_char_uncapped, is_char_uncapped_override, is_hide_rating, favorite_character, max_stamina_notification_enabled, current_map, ticket, prog_boost, email)
-        values(:user_id, :name, :password, :join_date, :user_code, 0, 0, 0, 0, 0, 0, -1, 0, '', :memories, 0, :email)
-        ''', {'user_code': self.user_code, 'user_id': self.user_id, 'join_date': now, 'name': self.name, 'password': self.hash_pwd, 'memories': Config.DEFAULT_MEMORIES, 'email': self.email})
+        character_id, is_skill_sealed, is_char_uncapped, is_char_uncapped_override, is_hide_rating, favorite_character, max_stamina_notification_enabled, current_map, ticket, prog_boost, email, is_allow_marketing_email)
+        values(:user_id, :name, :password, :join_date, :user_code, 0, 0, 0, 0, 0, 0, -1, 0, '', :memories, 0, :email, :is_allow_marketing_email)
+        ''', {'user_code': self.user_code, 'user_id': self.user_id, 'join_date': now, 'name': self.name, 'password': self.hash_pwd, 'memories': Config.DEFAULT_MEMORIES, 'email': self.email, 'is_allow_marketing_email': self.is_allow_marketing_email})
 
 
 class UserLogin(User):
@@ -519,6 +521,7 @@ class UserInfo(User):
                 "is_hide_rating": self.is_hide_rating,
                 "max_stamina_notification_enabled": self.max_stamina_notification_enabled,
                 "mp_notification_enabled": self.mp_notification_enabled,
+                "is_allow_marketing_email": self.is_allow_marketing_email,
             },
             "user_id": self.user_id,
             "name": self.name,
@@ -566,6 +569,8 @@ class UserInfo(User):
             #         "feature": "paymentlink"
             #     }
             # ],
+
+            'has_email': self.email != '',
         }
 
     def from_list(self, x: list) -> 'UserInfo':
@@ -613,6 +618,7 @@ class UserInfo(User):
         self.insight_state = x[38]
 
         self.custom_banner = x[39] if x[39] is not None else ''
+        self.is_allow_marketing_email = x[40] == 1
 
         return self
 
