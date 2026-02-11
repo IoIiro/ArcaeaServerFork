@@ -864,24 +864,6 @@
 		"price": 500
 	},
 	{
-		"name": "lephon",
-		"items": [
-			{
-				"type": "pack",
-				"id": "lephon",
-				"is_available": true
-			},
-			{
-				"type": "core",
-				"amount": 5,
-				"id": "core_generic",
-				"is_available": true
-			}
-		],
-		"orig_price": 500,
-		"price": 500
-	},
-	{
 		"name": "ongeki_append_2",
 		"items": [
 			{
@@ -898,6 +880,24 @@
 		],
 		"orig_price": 400,
 		"price": 400
+	},
+	{
+		"name": "lephon",
+		"items": [
+			{
+				"type": "pack",
+				"id": "lephon",
+				"is_available": true
+			},
+			{
+				"type": "core",
+				"amount": 5,
+				"id": "core_generic",
+				"is_available": true
+			}
+		],
+		"orig_price": 500,
+		"price": 500
 	},
 	{
 		"name": "chunithm_append_3",
@@ -993,14 +993,14 @@
 		"name": "anima",
 		"items": [
 			{
-				"type": "pack",
 				"id": "anima",
+				"type": "pack",
 				"is_available": true
 			},
 			{
+				"id": "core_generic",
 				"type": "core",
 				"amount": 5,
-				"id": "core_generic",
 				"is_available": true
 			}
 		],
@@ -1072,11 +1072,29 @@
 			{
 				"id": "core_generic",
 				"type": "core",
-				"amount": 6,
+				"amount": 5,
 				"is_available": true
 			}
 		],
-		"orig_price": 600,
-		"price": 600
+		"orig_price": 500,
+		"price": 500
+	},
+	{
+		"name": "megarex",
+		"items": [
+			{
+				"id": "megarex",
+				"type": "pack",
+				"is_available": true
+			},
+			{
+				"id": "core_generic",
+				"type": "core",
+				"amount": 5,
+				"is_available": true
+			}
+		],
+		"orig_price": 500,
+		"price": 500
 	}
 ]
