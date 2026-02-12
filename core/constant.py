@@ -122,7 +122,7 @@ class Constant:
                                                      0x6CB300), (0XA35687B, 0xE456CDEA)
     ]
 
-    DATABASE_MIGRATE_TABLES = ['user', 'friend', 'best_score', 'recent30', 'user_world', 'item', 'user_item', 'purchase', 'purchase_item', 'user_save', 'user_world_map',
+    DATABASE_MIGRATE_TABLES = ['user', 'friend', 'best_score', 'recent30', 'user_world', 'item', 'user_item', 'purchase', 'purchase_item', 'user_save', 'user_world_map', 'user_kvdata',
                                'login', 'present', 'user_present', 'present_item', 'redeem', 'user_redeem', 'user_mission', 'redeem_item', 'api_login', 'chart', 'user_course', 'user_char', 'user_role']
 
     LOG_DATABASE_MIGRATE_TABLES = ['cache', 'user_score', 'user_rating']
