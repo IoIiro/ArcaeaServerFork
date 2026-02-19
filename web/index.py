@@ -9,7 +9,7 @@ import web.webscore
 from core.init import FileChecker
 from core.operation import (DeleteUserScore, RefreshAllScoreRating,
                             RefreshBundleCache, RefreshSongFileCache,
-                            SaveUpdateScore, UnlockUserItem)
+                            SaveUpdateScore, UnlockUserItem, RefreshWorldMapCache)
 from core.rank import RankList
 from core.score import Potential
 from core.sql import Connect
@@ -311,6 +311,17 @@ def update_content_bundle():
     # 更新 bundle
     try:
         RefreshBundleCache().run()
+        flash('数据刷新成功 Success refresh data.')
+    except:
+        flash('Something error!')
+    return render_template('web/updatedatabase.html')
+
+@bp.route('/updatedatabase/refreshworldmap', methods=['POST'])
+@login_required
+def update_world_map():
+    # 更新 world map
+    try:
+        RefreshWorldMapCache().run()
         flash('数据刷新成功 Success refresh data.')
     except:
         flash('Something error!')
