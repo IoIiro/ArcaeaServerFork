@@ -38,7 +38,7 @@ beyond_boost_gauge real default 0,
 kanae_stored_prog real default 0,
 mp_notification_enabled int default 1,
 insight_state int default 0,
-custom_banner text
+custom_banner text,
 is_allow_marketing_email int default 0
 );
 create table if not exists login(access_token text,
