@@ -11,10 +11,10 @@ class Constant:
 
     MAX_STAMINA = 12
 
-    STAMINA_RECOVER_TICK = 1800000
+    STAMINA_RECOVER_TICK = Config.STAMINA_RECOVER_TICK
     FRAGSTAM_RECOVER_TICK = 23 * 3600 * 1000
 
-    COURSE_STAMINA_COST = 4
+    COURSE_STAMINA_COST = Config.COURSE_STAMINA_COST
 
     CORE_EXP = 250
 
@@ -29,7 +29,7 @@ class Constant:
     ETO_UNCAP_BONUS_PROGRESS = 7
     LUNA_UNCAP_BONUS_PROGRESS = 7
     AYU_UNCAP_BONUS_PROGRESS = 5
-    SKILL_FATALIS_WORLD_LOCKED_TIME = 3600000
+    SKILL_FATALIS_WORLD_LOCKED_TIME = Config.SKILL_FATALIS_WORLD_LOCKED_TIME
     SKILL_MIKA_SONGS = ['aprilshowers', 'seventhsense', 'oshamascramble', 'breakbreak', 'straightintolights', 'virtus', 'yomibitoshirazu',
                         'amazingmightyyyy', 'cycles', 'maxrage', 'infinity', 'temptation']
     FATALIS_MAX_VALUE = 100
@@ -39,8 +39,7 @@ class Constant:
     MY_RANK_MAX_LOCAL_POSITION = 5
     MY_RANK_MAX_GLOBAL_POSITION = 9999
 
-    BEST30_WEIGHT = Config.BEST30_WEIGHT
-    RECENT10_WEIGHT = Config.RECENT10_WEIGHT
+    PTT_FORMULA = Config.PTT_FORMULA
     INVASION_START_WEIGHT = Config.INVASION_START_WEIGHT
     INVASION_HARD_WEIGHT = Config.INVASION_HARD_WEIGHT
 

@@ -77,15 +77,24 @@ class Config:
     WORLD_SCENERY_FULL_UNLOCK = True
 
     SAVE_FULL_UNLOCK = False
+    STAMINA_RECOVER_TICK = 1800000
+    SKILL_FATALIS_WORLD_LOCKED_TIME = 3600000
+    COURSE_STAMINA_COST = 4
 
     ALLOW_SELF_ACCOUNT_DELETE = False
 
     # ------------------------------------------
-
     # You can change this to make another PTT mechanism.
-    BEST30_WEIGHT = 1 / 40
-    RECENT10_WEIGHT = 1 / 40
-
+    #
+    # Every element of the list is a pair containing:
+    # - the kind of the factor ("best" or "recent")
+    # - the amount of scores to add up for the factor
+    # - the weight the sum of said scores should have
+    #
+    # Note: the "recent" components will currently take the best
+    #       N scores out of the recent 30 only. Setting the amount
+    #       to >30 will not work as expected.
+    PTT_FORMULA = [("best", 30, 1 / 40), ("recent", 10, 1 / 40)]
 
     INVASION_START_WEIGHT = 0.1
     INVASION_HARD_WEIGHT = 0.1
@@ -111,6 +120,9 @@ class Config:
     GAME_REGISTER_DEVICE_RATE_LIMIT = '3/1 day'
 
     NOTIFICATION_EXPIRE_TIME = 3 * 60 * 1000
+
+    # Do not disable unless you know what you're doing
+    SONG_HASH_CHECKS = True
 
 
 class ConfigManager:
