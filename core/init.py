@@ -87,6 +87,8 @@ class DatabaseInit:
             (i,) for i in self.init_data.world_unlocks])
         self.c.executemany('''insert into item values(?,"course_banner",1)''', [
             (i,) for i in self.init_data.course_banners])
+        self.c.executemany('''insert into item values(?,"online_banner",1)''', [
+            (i,) for i in self.init_data.online_banners])
 
         self.c.execute('''insert into item values(?,?,?)''',
                        ('fragment', 'fragment', 1))

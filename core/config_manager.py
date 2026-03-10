@@ -12,7 +12,7 @@ class Config:
 
     SONG_FILE_HASH_PRE_CALCULATE = True
 
-    GAME_API_PREFIX = ['/apricotduck/38', '/']  # str | list[str]
+    GAME_API_PREFIX = ['/mattecanvas/39', '/']  # str | list[str]
     OLD_GAME_API_PREFIX = []  # str | list[str]
 
     ALLOW_APPVERSION = []  # list[str]
@@ -75,6 +75,7 @@ class Config:
     CHARACTER_FULL_UNLOCK = True
     WORLD_SONG_FULL_UNLOCK = True
     WORLD_SCENERY_FULL_UNLOCK = True
+    ONLINE_BANNER_FULL_UNLOCK = True
 
     SAVE_FULL_UNLOCK = False
 

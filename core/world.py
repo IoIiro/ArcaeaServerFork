@@ -1434,6 +1434,20 @@ class WorldLawMixin:
             "frag50": self._frag50,
             "lowlevel": self._lowlevel,
             "antiheroism": self._antiheroism,
+
+            # 下面的是本地作用的，服务端无需处理
+            # 'non_support_damage400': self._non_support_damage400,
+            # 'non_balance_damage400': self._non_balance_damage400,
+            # 'damage_over40': self._damage_over40,
+
+            # TODO: 下面的和曲目数据有关，目前很难处理
+            # 'fixed_bpm_low': self._fixed_bpm_low,
+            # 'fixed_bpm_high': self._fixed_bpm_high,
+            # 'bonus_contest2020_conflict': self._bonus_contest2020_conflict,
+            # 'bonus_contest2020_light': self._bonus_contest2020_light,
+            # 'bonus_bg_prelude_conflict': self._bonus_bg_prelude_conflict,
+            # 'bonus_single_etrbyd': self._bonus_single_etrbyd,
+            # 'bonus_damage_rating': self._bonus_damage_rating,
         }
         if self.user.current_map.new_law in factory_dict:
             factory_dict[self.user.current_map.new_law]()

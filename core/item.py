@@ -271,8 +271,8 @@ class WorldUnlock(NormalItem):
         self.is_available = True
 
 
-class CourseBanner(NormalItem):
-    item_type = 'course_banner'
+class Banner(NormalItem):
+    item_type = 'banner'
 
     def __init__(self, c) -> None:
         super().__init__(c)
@@ -280,6 +280,14 @@ class CourseBanner(NormalItem):
 
     def __str__(self) -> str:
         return str(self.item_id)
+
+
+class CourseBanner(Banner):
+    item_type = 'course_banner'
+
+
+class OnlineBanner(Banner):
+    item_type = 'online_banner'
 
 
 class Single(NormalItem):
@@ -376,6 +384,8 @@ class ItemFactory:
             return Stamina6(self.c)
         elif item_type == 'course_banner':
             return CourseBanner(self.c)
+        elif item_type == 'online_banner':
+            return OnlineBanner(self.c)
         else:
             raise InputError(
                 f'The item type `{item_type}` is invalid.', api_error_code=-120)
@@ -417,6 +427,10 @@ class ItemFactory:
             item_type = 'course_banner'
             item_id = s
             amount = 1
+        elif s.startswith('online_banner'):
+            item_type = 'online_banner'
+            item_id = s
+            amount = 1
         else:
             raise InputError('The string of item is wrong.')
         i = cls().get_item(item_type)
@@ -445,7 +459,7 @@ class UserItemList:
         '''
             根据item_type搜索用户的item
         '''
-        if Config.WORLD_SONG_FULL_UNLOCK and item_type == 'world_song' or Config.WORLD_SCENERY_FULL_UNLOCK and item_type == 'world_unlock':
+        if Config.WORLD_SONG_FULL_UNLOCK and item_type == 'world_song' or Config.WORLD_SCENERY_FULL_UNLOCK and item_type == 'world_unlock' or Config.ONLINE_BANNER_FULL_UNLOCK and item_type == 'online_banner':
             self.c.execute(
                 '''select item_id from item where type=?''', (item_type,))
         else:

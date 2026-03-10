@@ -159,6 +159,27 @@ def cloud_post(user_id):
         return success_return({'user_id': user.user_id})
 
 
+@bp.route('/me/profile', methods=['POST'])
+@auth_required(request)
+@arc_try
+def profile_post(user_id):
+    with Connect() as c:
+        user = UserOnline(c, user_id)
+        is_profile_public = request.form.get('is_profile_public')
+        # world_unlock = request.form.get('world_unlock')
+        banner = request.form.get('banner')
+        # print(is_profile_public, world_unlock, banner)
+        user.select_user_about_profile()
+        user.change_profile(is_profile_public == 'true', banner)
+
+        return success_return({
+            "is_profile_public": user.is_profile_public,
+            "showcase_characters": [-1, -1, -1],
+            "world_unlock": "",
+            "custom_banner": user.custom_banner
+        })
+
+
 @bp.route('/me/setting/<set_arg>', methods=['POST'])  # 三个设置
 @auth_required(request)
 @arc_try

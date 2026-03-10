@@ -251,7 +251,7 @@ class UnlockUserItem(BaseOperation):
     _name = 'unlock_user_item'
 
     ALLOW_TYPES = ['single', 'pack', 'world_song',
-                   'course_banner', 'world_unlock']
+                   'course_banner', 'world_unlock', 'online_banner']
 
     def __init__(self, user=None, method: str = 'unlock', item_types: list = ['single', 'pack']):
         self.user = user
