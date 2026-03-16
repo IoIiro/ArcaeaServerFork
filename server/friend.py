@@ -14,14 +14,6 @@ bp = Blueprint('friend', __name__, url_prefix='/friend')
 @arc_try
 def friend_get(user_id):
     with Connect() as c:
-        return success_return(UserOnline(c, user_id).friends)
-
-
-@bp.route('/me', methods=['GET'])  # 好友列表
-@auth_required(request)
-@arc_try
-def friend_get(user_id):
-    with Connect() as c:
         user = UserOnline(c, user_id)
         return success_return({
             "friends": user.friends
