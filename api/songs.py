@@ -8,6 +8,9 @@ from core.sql import Connect, Query, Sql
 from .api_auth import api_try, request_json_handle, role_required
 from .api_code import success_return
 from .constant import Constant
+from os import path
+import json
+
 
 bp = Blueprint('songs', __name__, url_prefix='/songs')
 
@@ -55,6 +58,12 @@ def songs_song_delete(user, song_id):
         return success_return()
 
 
+_cached_songlist = None
+with open(f"{path.dirname(__file__)}/../database/songs/songlist") as file:
+    _cached_songlist = json.load(file)['songs']
+
+
+
 @bp.route('', methods=['GET'])
 @role_required(request, ['select', 'select_song_info'])
 @request_json_handle(request, optional_keys=Constant.QUERY_KEYS)
@@ -74,7 +83,19 @@ def songs_get(data, user):
         if not r:
             raise NoData(api_error_code=-2)
 
-        return success_return([x.to_dict() for x in r])
+        
+
+        songs = [x.to_dict() for x in r]
+        for song in songs:
+            songlist_song = (next(
+                (item for item in _cached_songs if item['id'] == song['song_id']), 
+                None)
+            )
+            if songlist_song is not None:
+                song['set'] = songlist_song['set']
+                song['version'] = songlist_song['version']
+
+        return success_return(songs)
 
 
 @bp.route('', methods=['POST'])
