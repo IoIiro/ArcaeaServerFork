@@ -459,6 +459,9 @@ class UserItemList:
         '''
             根据item_type搜索用户的item
         '''
+        if Config.WORLD_SONG_FULL_UNLOCK and Config.WORLD_SONG_FULL_UNLOCK_WITHOUT_MAP and item_type == 'world_song':
+            return self._select_world_song_without_map()
+
         if Config.WORLD_SONG_FULL_UNLOCK and item_type == 'world_song' or Config.WORLD_SCENERY_FULL_UNLOCK and item_type == 'world_unlock' or Config.ONLINE_BANNER_FULL_UNLOCK and item_type == 'online_banner':
             self.c.execute(
                 '''select item_id from item where type=?''', (item_type,))
@@ -477,6 +480,31 @@ class UserItemList:
                 amount = 1
             self.items.append(ItemFactory.from_dict(
                 {'item_id': i[0], 'amount': amount, 'item_type': item_type}, self.c))
+        return self
+
+    def _select_world_song_without_map(self):
+        '''
+            select_from_type 的特殊情况，查询世界模式未包含在地图中的歌曲
+        '''
+        assert Config.WORLD_SONG_FULL_UNLOCK_WITHOUT_MAP and Config.WORLD_SONG_FULL_UNLOCK
+        self.c.execute('''select item_id from item where type="world_song"''')
+        x = self.c.fetchall()
+        self.c.execute(
+            '''select item_id, amount from user_item where type = "world_song" and user_id = ?''', (self.user.user_id,))
+        y = self.c.fetchall()
+        if not x or not y:
+            return self
+
+        from .world import MapParser
+        user_world_songs = set(i[0] for i in y)
+        self.items: list = []
+        for i in x:
+            item_id = i[0]
+            if item_id in MapParser.world_song_rewards and item_id not in user_world_songs:
+                continue
+
+            self.items.append(ItemFactory.from_dict(
+                {'item_id': item_id, 'amount': 1, 'item_type': 'world_song'}, self.c))
         return self
 
 

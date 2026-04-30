@@ -22,6 +22,8 @@ class MapParser:
     # 章节包含的地图（不包含可重复地图）
     chapter_info_without_repeatable: 'dict[int, list[str]]' = {}
 
+    world_song_rewards: 'set[str]' = set()  # 作为世界模式奖励的歌曲 ID
+
     def __init__(self) -> None:
         if not self.map_id_path:
             self.parse()
@@ -45,13 +47,19 @@ class MapParser:
                 if not is_repeatable:
                     self.chapter_info_without_repeatable.setdefault(
                         chapter, []).append(map_id)
+                steps = map_data.get('steps', [])
                 self.world_info[map_id] = {
                     'chapter': chapter,
                     'is_repeatable': is_repeatable,
                     'is_beyond': map_data.get('is_beyond', False),
                     'is_legacy': map_data.get('is_legacy', False),
-                    'step_count': len(map_data.get('steps', [])),
+                    'step_count': len(steps),
                 }
+
+                for step in steps:
+                    for item in step.get('items', []):
+                        if item.get('type') == 'world_song' and 'id' in item:
+                            self.world_song_rewards.add(item['id'])
 
         for i in range(4):
             self.map_lephon_nell_phases[i] = os.path.join(
@@ -63,11 +71,12 @@ class MapParser:
         self.world_info.clear()
         self.chapter_info.clear()
         self.chapter_info_without_repeatable.clear()
+        self.world_song_rewards.clear()
         self.get_world_info.cache_clear()
         self.parse()
 
     @staticmethod
-    @lru_cache(maxsize=128)
+    @lru_cache(maxsize=Constant.LRU_CACHE_MAX_SIZE['get_world_info'])
     def get_world_info(map_id: str) -> dict:
         """读取json文件内容，返回字典"""
         world_info = {}

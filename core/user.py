@@ -594,8 +594,14 @@ class UserInfo(User):
 
             # 'enabled_features': [
             #     {
-            #         "metadata": ["USA"],
-            #         "feature": "paymentlink"
+            #         "feature": "paymentlink",
+            #         "metadata": [
+            #             "USA"
+            #         ]
+            #     },
+            #     {
+            #         "feature": "if-demo-popup",
+            #         "metadata": []
             #     }
             # ],
 

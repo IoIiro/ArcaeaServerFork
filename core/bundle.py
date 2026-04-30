@@ -64,7 +64,7 @@ class ContentBundle:
             'contentBundleVersion': self.version,
             'appVersion': self.app_version,
             'jsonSize': self.json_size,
-            'bundleParts': [ { 'bundleSize': self.bundle_size } ]
+            'bundleParts': [{'bundleSize': self.bundle_size}]
         }
         if self.json_url and self.bundle_url:
             r['jsonUrl'] = self.json_url
