@@ -33,7 +33,6 @@ class ContentBundle:
         self.bundle_parts: 'list[BundlePart]' = []
 
         self.json_url: str = None
-        self.bundle_url: str = None
 
     @staticmethod
     def parse_version(version: str) -> tuple:
@@ -51,7 +50,7 @@ class ContentBundle:
     def from_json(cls, json_data: dict) -> 'ContentBundle':
         x = cls()
         x.version = json_data['versionNumber']
-        x.prev_version = json_data['previousVersionNumber']
+        x.prev_version = json_data.get('previousVersionNumber')
         x.app_version = json_data['applicationVersionNumber']
         x.uuid = json_data['uuid']
         x.part_num = json_data.get('totalPartitions', 1)
@@ -64,9 +63,8 @@ class ContentBundle:
             'contentBundleVersion': self.version,
             'appVersion': self.app_version,
             'jsonSize': self.json_size,
-            'bundleParts': [{'bundleSize': self.bundle_size}]
         }
-        if self.json_url and self.bundle_url:
+        if self.json_url:
             r['jsonUrl'] = self.json_url
             parts = []
             for p in self.bundle_parts:
@@ -81,8 +79,9 @@ class ContentBundle:
     def calculate_size(self) -> None:
         self.json_size = os.path.getsize(os.path.join(
             Constant.CONTENT_BUNDLE_FOLDER_PATH, self.json_path))
-        self.bundle_size = os.path.getsize(os.path.join(
-            Constant.CONTENT_BUNDLE_FOLDER_PATH, self.bundle_path))
+        for part in self.bundle_parts:
+            part.size = os.path.getsize(os.path.join(
+                Constant.CONTENT_BUNDLE_FOLDER_PATH, part.path))
 
 
 class BundleParser:
@@ -116,7 +115,7 @@ class BundleParser:
                     continue
 
                 json_path = os.path.join(root, file)
-                bundle_path = os.path.join(root, f'{file[:-5]}.cb')
+                stem = file[:-5]
 
                 with open(json_path, 'rb') as f:
                     data = json.load(f)
@@ -151,7 +150,7 @@ class BundleParser:
 
                 if not x.bundle_parts:
                     raise FileNotFoundError(
-                        f'Bundle file not found: {bundle_path}')
+                        f'Bundle file(s) not found for: {json_path}')
                 x.calculate_size()
 
                 self.bundles.setdefault(x.app_version, []).append(x)
@@ -166,7 +165,7 @@ class BundleParser:
             self.max_bundle_version[k] = v[-1].version
 
     @staticmethod
-    @lru_cache(maxsize=Constant.LRU_CACHE_MAX_SIZE['get_bundles'])
+    @lru_cache(maxsize=128)
     def get_bundles(app_ver: str, b_ver: str) -> 'list[ContentBundle]':
         if Config.BUNDLE_STRICT_MODE:
             return BundleParser.bundles.get(app_ver, [])
