@@ -28,7 +28,7 @@ class ContentBundle:
         self.part_num: int = None
 
         self.json_size: int = None
-        # self.bundle_size: int = None
+        self.bundle_size: int = None
         self.json_path: str = None  # relative path
         self.bundle_parts: 'list[BundlePart]' = []
 
@@ -125,8 +125,8 @@ class BundleParser:
 
                 x.json_path = os.path.relpath(
                     json_path, Constant.CONTENT_BUNDLE_FOLDER_PATH)
-                x.bundle_path = os.path.relpath(
-                    bundle_path, Constant.CONTENT_BUNDLE_FOLDER_PATH)
+                # x.bundle_path = os.path.relpath(
+                #     bundle_path, Constant.CONTENT_BUNDLE_FOLDER_PATH)
 
                 x.json_path = x.json_path.replace('\\', '/')
                 # x.bundle_path = x.bundle_path.replace('\\', '/')
