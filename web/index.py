@@ -103,7 +103,7 @@ def single_player_ptt():
                     u = User()
                     u.user_id = user_id
                     p = Potential(c, u)
-                    recentptt = p.recent_10 / 10
+                    recentptt = p.recent_n(10) / 10
                     recent = p.recent_30_to_dict_list()
                     if not posts:
                         error = '无成绩 No score.'
