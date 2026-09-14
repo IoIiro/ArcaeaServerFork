@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 
 from core.config_manager import Config
 from core.error import ArcError
@@ -35,6 +35,9 @@ def room_create(user_id):
 @auth_required(request)
 @arc_try
 def room_join(user_id, room_code):
+    if room_code == "NEWEYE":
+        raise ArcError(api_error_code=1299, status=404)
+
     if not Config.LINKPLAY_HOST:
         raise ArcError('The link play server is unavailable.', 151, status=404)
 
