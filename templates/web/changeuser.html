@@ -1,37 +1,32 @@
 {% extends 'base.html' %}
-{% block header %}
-<h1>{% block title %}Change user information{% endblock %}</h1>
-{% endblock %}
+{% block title %}Change user information{% endblock %}
 
 {% block content %}
-<form action="/web/changeuser/edituser" method="post">
-    <div class="title">Edit the user</div>
+<form class="form-block" action="/web/changeuser/edituser" method="post">
+    <div class="form-title">Edit the user</div>
+
     <label for="name">Arcaea Username</label>
-    <input name="name" id="name">
-    or<br />
+    <input name="name" id="name"><br><span style="font-size:.84rem; color:#6b7280;">or</span><br>
+
     <label for="user_code">Arcaea User Code</label>
     <input name="user_code" id="user_code">
-    <br />
-    <br />
 
     <label for="ticket">Memories</label>
     <input name="ticket" id="ticket">
 
+    <div class="form-hint mt-sm">If some things do not need to be modified, leave it blank.</div>
+    <div class="form-hint">At present, only memories can be modified.</div>
 
-    <br />
-    <div class="content">如果某些不需要修改，留空即可</div>
-    <div class="content">If some things do not need to be modified, leave it blank.</div>
-    <div class="content">目前只支持修改记忆源点</div>
-    <div class="content">At present, only memories can be modified.</div>
     <input type="submit" value="Edit">
 </form>
-<br />
-<hr />
-<form action="/web/changeuser/edituser" method="post">
-    <div class="title">Edit all the users</div>
+
+<form class="form-block" action="/web/changeuser/edituser" method="post">
+    <div class="form-title">Edit all the users</div>
+
     <label for="ticket">Memories</label>
     <input name="ticket" id="ticket">
 
     <input type="submit" value="Edit all">
 </form>
+
 {% endblock %}

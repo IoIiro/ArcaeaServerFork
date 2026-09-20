@@ -1,7 +1,5 @@
 from os import urandom
-from cryptography.hazmat.primitives.ciphers import (
-    Cipher, algorithms, modes
-)
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
 
 def encrypt(key, plaintext, associated_data):

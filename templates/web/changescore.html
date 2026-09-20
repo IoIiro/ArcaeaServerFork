@@ -1,39 +1,32 @@
 {% extends 'base.html' %}
-{% block header %}
-<h1>{% block title %}Change the scores{% endblock %}</h1>
-{% endblock %}
+{% block title %}Change the scores{% endblock %}
 
 {% block content %}
-<form action="/web/changescore/delete" method="post">
-    <div class="title">Delete the scores</div>
+<form class="form-block" action="/web/changescore/delete" method="post">
+    <div class="form-title">Delete the scores</div>
+
     <label for="sid">SID of the song</label>
-    <input name="sid" id="sid">
+    <input name="sid" id="sid"><br><br>
 
     <label for="difficulty">Difficulty</label>
-    <select name='difficulty' id='difficulty'>
+    <select name="difficulty" id="difficulty">
         <option value="-1" selected>All</option>
         <option value="0">Past</option>
         <option value="1">Present</option>
         <option value="2">Future</option>
         <option value="3">Beyond</option>
         <option value="4">Eternal</option>
-    </select>
-    <br />
+    </select><br><br>
 
     <label for="name">Arcaea Username</label>
-    <input name="name" id="name">
-    or<br />
+    <input name="name" id="name"><br><span style="font-size:.84rem; color:#6b7280;">or</span><br>
+
     <label for="user_code">Arcaea User Code</label>
-    <input name="user_code" id="user_code">
+    <input name="user_code" id="user_code"><br><br>
 
-    <br />
-    <br />
-    <div class="content">上述三项是查询参数，如果留空，则被认为是全部，都不填则认为是错误的。</div>
-    <div class="content">The above three are query parameters. If they are left blank, they are considered all. However,
-        if you don't fill in all of them, it's wrong.</div>
-    <br />
-    <br />
-
+    <div class="form-hint mt-sm">The above three are query parameters. If they are left blank, they are considered all.
+        However, if you don't fill in all of them, it's wrong.</div>
     <input type="submit" value="Delete">
 </form>
+
 {% endblock %}

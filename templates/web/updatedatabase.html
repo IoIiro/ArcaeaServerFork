@@ -1,68 +1,53 @@
 {% extends 'base.html' %}
-{% block header %}
-<h1>{% block title %}Update databases{% endblock %}</h1>
-{% endblock %}
+{% block title %}Update databases{% endblock %}
 
 {% block content %}
-<form method="post" enctype="multipart/form-data">
-    <label for="name">Old database</label>
-    <input type="file" name="file">
+<form class="form-block" method="post" enctype="multipart/form-data">
+    <div class="form-title">Upload old database</div>
+
+    <label for="file">Old database file (arcaea_database.db)</label>
+    <input type="file" name="file"><br><br>
+
     <input type="submit" value="Submit">
-</form>
-<div class="content">
-    这里可以将旧版本的数据库同步到新版本的数据库，并刷新用户拥有的全角色列表。<br />
-    可上传文件: arcaea_database.db<br />
-    新数据库不存在的数据会被添加，存在的重复数据也会被改变。<br /><br />
-    Here you can synchronize the old version of the database to the new version of the database and refresh the list of
-    full
-    characters owned by players.<br />
-    Uploadable files: arcaea_database.db<br />
-    Data that does not exist in the new database will be added and the existing duplicate data will also be changed.
-</div>
-<br />
-<hr />
-<form action="/web/updatedatabase/refreshsonghash" method="post">
-    <div class="title">Refresh songs' hash</div>
-    <br />
-    <input type="submit" value="Refresh">
 
-    <div class="content">这里可以刷新储存在数据库中的songs文件夹下所有文件的Hash值。目的是应对歌曲谱面文件的更新。</div>
-    <div class="content">Here you can refresh the hash values of all the files stored in the songs folder in the
-        database. The purpose is to deal with the updating of songs' files.</div>
-</form>
-<br />
-<hr />
-<form action="/web/updatedatabase/refreshsongrating" method="post">
-    <div class="title">Refresh songs' rating</div>
-    <br />
-    <input type="submit" value="Refresh">
+    <div style="margin-top:.75rem; font-size:.84rem; line-height:1.6;">
+        <p class="text-muted mb-sm">Here you can synchronize the old version of the database to the new version and
+            refresh the list of full characters owned by players.</p>
 
-    <div class="content">这里可以刷新数据库中所有成绩的评分。目的是应对歌曲谱面定数的更新。</div>
-    <div class="content">Here you can refresh the ratings of all scores in the database. The purpose is to deal
-        with the updating of songs' chart consts.</div>
+        <div style="display:flex; gap:.5em; align-items:baseline;"><span style="color:#4b5563;">Uploadable
+                files:<strong>{{ 'arcaea_database.db' }}</strong></div>
+        <p class="text-muted mt-sm">Data that does not exist in the new database will be added and existing duplicate
+            data will also be changed.</p>
+    </div>
 </form>
-<br />
-<hr />
-<form action="/web/updatedatabase/refreshsbundle" method="post">
-    <div class="title">Refresh content bundles</div>
-    <br />
-    <input type="submit" value="Refresh">
 
-    <div class="content">这里可以刷新储存在内存中的 bundle 文件夹下所有热更新文件的信息。目的是应对热更新文件的修改。</div>
-    <div class="content">Here you can refresh the information of all the files stored in the bundle folder in memory.
-        The purpose
-        is to deal with the updating of content bundles.</div>
-</form>
-<br />
-<hr />
-<form action="/web/updatedatabase/refreshworldmap" method="post">
-    <div class="title">Refresh world maps</div>
-    <br />
+<form class="form-block refresh-form" action="/web/updatedatabase/refreshsonghash" method="post">
+    <div class="form-title">Refresh songs' hash</div>
     <input type="submit" value="Refresh">
-
-    <div class="content">这里可以刷新储存在内存中的 map 文件夹下所有地图文件的信息。目的是应对地图文件的修改。</div>
-    <div class="content">Here you can refresh the information of all the files stored in the map folder in memory.
-        The purpose
-        is to deal with the updating of world maps.</div>
+    <div class="text-muted mt-sm">Here you can refresh the hash values of all files stored in the songs folder in the
+        database.<br>Purpose: deal with updating of song chart files.</div>
 </form>
+
+<form class="form-block refresh-form" action="/web/updatedatabase/refreshsongrating" method="post">
+    <div class="form-title">Refresh songs' rating</div>
+    <input type="submit" value="Refresh">
+    <div class="text-muted mt-sm">Here you can refresh the ratings of all scores in the database.<br>Purpose: deal with
+        updating of song chart consts.</div>
+</form>
+
+<form class="form-block refresh-form" action="/web/updatedatabase/refreshsbundle" method="post">
+    <div class="form-title">Refresh content bundles</div>
+    <input type="submit" value="Refresh">
+    <div class="text-muted mt-sm">Here you can refresh the information of all files stored in the bundle folder in
+        memory.<br>Purpose: deal with updating of content bundles.</div>
+</form>
+
+<form class="form-block refresh-form" action="/web/updatedatabase/refreshworldmap" method="post">
+    <div class="form-title">Refresh world maps</div>
+    <input type="submit" value="Refresh">
+    <div class="text-muted mt-sm">Here you can refresh the information of all files stored in the map folder in memory.
+        <br>Purpose: deal with updating of world maps.
+    </div>
+</form>
+
 {% endblock %}

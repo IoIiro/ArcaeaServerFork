@@ -1,55 +1,41 @@
 {% extends 'base.html' %}
-{% block header %}
-<h1>{% block title %}All presents{% endblock %}</h1>
-{% endblock %}
+{% block title %}All presents{% endblock %}
 
 {% block content %}
-{% if posts %}<br />
-{% for present in posts %}
+{% if posts %}
+<div class="card-list">
+    {% for present in posts %}
+    <div class="data-card">
+        <div><span class="field-label">Id:</span> <span class="field-value"
+                style="font-weight:600;">{{present['present_id']}}</span></div>
+        <div style="margin-top:.25em;"><span class="field-label">Expire time:</span> {{present['expire_ts']}}</div>
+        <div style="margin-top:.25em;"><span class="field-label">Description:</span> {{present['description']}}</div>
 
-<div class="char-present">
-    <span>Id: </span>
-    <span class="name">{{present['present_id']}}</span>
-    <br />
-
-    <span>Expire time: </span>
-    <span class="char-num">{{present['expire_ts']}}</span>
-    <br />
-
-    <span>Description: </span>
-    <span class="char-num">{{present['description']}}</span>
-    <br />
-
-    {% if present['items'] %}<br />
-    {% for x in present['items'] %}
-    <span>Item id: </span>
-    <span class="char-num">{{x['item_id']}}</span>
-    <br />
-
-    <span>Item type: </span>
-    <span class="char-num">{{x['type']}}</span>
-    <br />
-
-    <span>Amount: </span>
-    <span class="char-num">{{x['amount']}}</span>
-    <br />
-
-
-
+        {% if present.get('items') %}
+        <table style="margin-top:.5em; font-size:.84rem;" cellpadding="0" cellspacing="0">
+            <tbody>
+                {% for x in present['items'] %}
+                <tr>
+                    <td>Item id: </td>
+                    <td>{{x['item_id']}} &nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>Type: </td>
+                    <td>{{x['type']}} &nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>Amount: </td>
+                    <td>{{x['amount']}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
     {% if not loop.last %}
-    <br />
-    {% endif %}
+    <hr style="border:none;border-top:1px solid #e5e7eb;margin:.4rem 0;">{% endif %}
     {% endfor %}
-    {% endif %}
-
-
 </div>
-{% if not loop.last %}
-<br />
-<hr />
-<br />
 {% endif %}
-{% endfor %}
 
-{% endif %}
 {% endblock %}

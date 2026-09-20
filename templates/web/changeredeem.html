@@ -1,65 +1,59 @@
 {% extends 'base.html' %}
-{% block header %}
-<h1>{% block title %}Change the redeem codes{% endblock %}</h1>
-{% endblock %}
+{% block title %}Change the redeem codes{% endblock %}
 
 {% block content %}
-<form action="/web/changeredeem/addredeem" method="post">
-    <div class="title">Add the redeem</div>
-    <div>指定生成 Specify generation</div>
+<form class="form-block" action="/web/changeredeem/addredeem" method="post">
+    <div class="form-title">Add the redeem</div>
+
+    <span style="font-size:.84rem; color:#6b7280;">Specify generation:</span><br>
+
     <label for="code">The redeem code</label>
-    <input name="code" id="code">
-    <div>Or</div>
-    <div>随机批量生成 Batch generation at random</div>
+    <input name="code" id="code"><br><span style="font-size:.84rem; color:#6b7280;">Or — batch generate at
+        random:</span><br>
+
     <label for="redeem_amount">Redeem code amount</label>
-    <input name="redeem_amount" id="redeem_amount">
-    <br />
-    <div>Redeem code type:
-        <br />
-        <br />
-        <label><input type="radio" name="redeem_type" value="0" checked>仅可使用一次 It can only be used once.</label>
-        <br />
-        <label><input type="radio" name="redeem_type" value="1">每个用户仅可以使用一次 Each user can only use it once.</label>
-    </div>
+    <input name="redeem_amount" id="redeem_amount"><br><br>
 
-
-    <br />
+    <div style="font-size:.84rem; color:#374151;">Redeem code type:</div>
+    <div class="radio-group mt-sm">
+        <label><input type="radio" name="redeem_type" value="0" checked>It can only be used once.</label>
+        <label style="margin-left:1rem;"><input type="radio" name="redeem_type" value="1">Each user can only use it
+            once.</label>
+    </div><br><br>
 
     <label for="item_id">ID of the item</label>
-    <input name="item_id" id="item_id" required>
-    <label for="type">Type</label>
-    <div>
-        <select name="type">
-            <option value='single' selected>Single song</option>
-            <option value='pack'>Song pack</option>
-            <option value='world_song'>World song</option>
-            <option value='world_unlock'>World unlock scene</option>
-            <option value='character'>Character</option>
-            <option value='core'>Character core</option>
-            <option value='fragment'>Fragment</option>
-            <option value='memory'>Memory</option>
-            <option value='anni5tix'>Anniversary 5 ticket</option>
-            <option value='pick_ticket'>Pick ticket</option>
-        </select>
-    </div>
+    <input name="item_id" id="item_id" required><br>
+
+    <label>Type</label>
+    <select name="type">
+        <option value='single' selected>Single song</option>
+        <option value='pack'>Song pack</option>
+        <option value='world_song'>World song</option>
+        <option value='world_unlock'>World unlock scene</option>
+        <option value='character'>Character</option>
+        <option value='core'>Character core</option>
+        <option value='fragment'>Fragment</option>
+        <option value='memory'>Memory</option>
+        <option value='anni5tix'>Anniversary 5 ticket</option>
+        <option value='pick_ticket'>Pick ticket</option>
+    </select><br>
+
     <label for="amount">Amount</label>
-    <input name="amount" id="amount" value="1" required>
-    <br />
+    <input name="amount" id="amount" value="1" required><br><br>
 
+    <div class="form-hint mt-sm">The length of redeem code is 10 ~ 20.</div>
+    <div class="form-hint">The amount of batch generation should not be more than 1000.</div>
 
-    <div class="content">兑换码长度为10~20。</div>
-    <div class="content">The length of redeem code is 10 ~ 20.</div>
-    <div class="content">随机生成数量不得超过1000。</div>
-    <div class="content">The amount of batch generation should not be more than 1000.</div>
     <input type="submit" value="Add">
 </form>
-<br />
-<hr />
-<form action="/web/changeredeem/deleteredeem" method="post">
-    <div class="title">Delete the redeem</div>
+
+<form class="form-block" action="/web/changeredeem/deleteredeem" method="post">
+    <div class="form-title">Delete the redeem</div>
+
     <label for="code">The redeem code</label>
-    <input name="code" id="code" required>
+    <input name="code" id="code" required><br>
 
     <input type="submit" value="Delete">
 </form>
+
 {% endblock %}

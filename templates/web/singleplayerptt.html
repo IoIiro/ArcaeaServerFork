@@ -1,199 +1,166 @@
 {% extends 'base.html' %}
-{% block header %}
-<h1>{% block title %}Single player ptt{% endblock %}</h1>
-{% endblock %}
+{% block title %}Single player ptt{% endblock %}
 
 {% block content %}
-<form method="post">
+<form class="form-block" method="post">
     <label for="name">Arcaea Username</label>
-    <input name="name" id="name">
-    or<br />
+    <input name="name" id="name"><br><span style="font-size:.84rem; color:#6b7280;">or</span><br>
+
     <label for="user_code">Arcaea User Code</label>
     <input name="user_code" id="user_code">
+
     <input type="submit" value="Find">
-    <br />
-    <br />
-    <br />
-    {% if user %}
-    <hr />
-
-    <div id="user-info">
-        <div class="title">玩家信息 Player information</div>
-        <div class="name">{{user['name']}}
-            <span class="rank">UID: {{user['user_id']}}</span>
-            <span class="rank">User code: {{user['user_code']}}</span>
-            {% if user['ban_flag'] %}
-            <span class="rank">Banned</span>
-            {% endif %}
-        </div>
-        <div class="join-date">注册于 Registered in: {{user['join_date']}}</div>
-        <div class="ptt">Memories: {{user['ticket']}}</div>
-        <div class="ptt">PTT: {{'%0.2f'|format(user['rating_ptt']/1000|float)}}</div>
-        <div class="ptt">Best 30 PTT: {{bestptt}}</div>
-        <div class="ptt">Recent 10 PTT: {{recentptt}}</div>
-        <div>
-            <div>Recent plays: </div>
-            <div>
-                <div class="score-item">
-                    <span class="song-title">
-                        {{user['song_id']}}
-                    </span>
-                    {% if user['difficulty'] == 0 %}
-                    <span class="difficulty_pst">PST</span>
-                    {% elif user['difficulty'] == 1 %}
-                    <span class="difficulty_prs">PRS</span>
-                    {% elif user['difficulty'] == 2 %}
-                    <span class="difficulty_ftr">FTR</span>
-                    {% elif user['difficulty'] == 4 %}
-                    <span class="difficulty_etr">ETR</span>
-                    {% else %}
-                    <span class="difficulty_byd">BYD</span>
-                    {% endif %}
-
-                    <div class="song-detail">
-                        <br />
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td>PURE: </td>
-                                    <td>{{user['perfect_count']}}</td>
-                                    <td> {{'(' ~ user['shiny_perfect_count'] ~ ')'}}</td>
-                                </tr>
-                                <tr>
-                                    <td>FAR: </td>
-                                    <td>{{user['near_count']}}</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>LOST: </td>
-                                    <td>{{user['miss_count']}}</td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="song-score">{{user['score']}}</div>
-                    <div class="song-clear-type">
-                        {% if user['clear_type'] == 3 %}Pure Memory
-                        {% elif user['clear_type'] == 2 %}Full Recall
-                        {% elif user['clear_type'] == 5 %}Hard Clear
-                        {% elif user['clear_type'] == 1 %}Normal Clear
-                        {% elif user['clear_type'] == 4 %}Easy Clear
-                        {% else%}Track Lost
-                        {% endif %}
-                    </div>
-                    <div class="song-rating">成绩评价 Rating: {{user['rating']}}</div>
-                    <div class="song-clear-date">日期 Date:
-                        {{user['time_played']}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <hr />
-    {% if posts %}
-    <div class="title">Best 30</div>
-    {% endif %}
-    {% for post in posts %}
-    <div class="score-item">
-        <span class="song-title">
-            {{post['song_id']}}
-        </span>
-        {% if post['difficulty'] == 0 %}
-        <span class="difficulty_pst">PST</span>
-        {% elif post['difficulty'] == 1 %}
-        <span class="difficulty_prs">PRS</span>
-        {% elif post['difficulty'] == 2 %}
-        <span class="difficulty_ftr">FTR</span>
-        {% else %}
-        <span class="difficulty_byd">BYD</span>
-        {% endif %}
-        <span class='rank'>{{'#' ~ post['rank']}}</span>
-
-        <div class="song-detail">
-            <br />
-            <table>
-                <tbody>
-                    <tr>
-                        <td>PURE: </td>
-                        <td>{{post['perfect_count']}}</td>
-                        <td> {{'(' ~ post['shiny_perfect_count'] ~ ')'}}</td>
-                    </tr>
-                    <tr>
-                        <td>FAR: </td>
-                        <td>{{post['near_count']}}</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>LOST: </td>
-                        <td>{{post['miss_count']}}</td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="song-score">{{post['score']}}</div>
-        <div class="song-clear-type">
-            {% if post['clear_type'] == 3 %}Pure Memory
-            {% elif post['clear_type'] == 2 %}Full Recall
-            {% elif post['clear_type'] == 5 %}Hard Clear
-            {% elif post['clear_type'] == 1 %}Normal Clear
-            {% elif post['clear_type'] == 4 %}Easy Clear
-            {% else%}Track Lost
-            {% endif %}
-            <span class="song-clear-type" style="margin-left: 1.875em;">
-                {% if post['best_clear_type'] == 3 %}(Pure Memory)
-                {% elif post['best_clear_type'] == 2 %}(Full Recall)
-                {% elif post['best_clear_type'] == 5 %}(Hard Clear)
-                {% elif post['best_clear_type'] == 1 %}(Normal Clear)
-                {% elif post['best_clear_type'] == 4 %}(Easy Clear)
-                {% else%}(Track Lost)
-                {% endif %}
-            </span>
-        </div>
-        <div class="song-rating">成绩评价 Rating: {{post['rating']}}</div>
-        <div class="song-clear-date">日期 Date:
-            {{post['time_played']}}
-        </div>
-    </div>
-
-    {% if not loop.last %}
-    <br />
-    {% endif %}
-    {% endfor %}
-    <hr />
-
-    {% if recent %}
-    <div class="title">Recent 30</div>
-    {% for i in recent %}
-
-    {% if i %}
-    <div class="score-item">
-        <span class="song-title">
-            {{i['song_id']}}
-        </span>
-        {% if i['difficulty'] == 0 %}
-        <span class="difficulty_pst">PST</span>
-        {% elif i['difficulty'] == 1 %}
-        <span class="difficulty_prs">PRS</span>
-        {% elif i['difficulty'] == 2 %}
-        <span class="difficulty_ftr">FTR</span>
-        {% elif i['difficulty'] == 4 %}
-        <span class="difficulty_etr">ETR</span>
-        {% else %}
-        <span class="difficulty_byd">BYD</span>
-        {% endif %}
-        <span class='rank'>{{loop.index}}</span>
-        <div class="song-rating">成绩评价 Rating: {{i['rating']}}</div>
-    </div>
-
-    {% if not loop.last %}
-    <br />
-    {% endif %}
-
-    {% endif %}
-    {% endfor %}
-    {% endif %}
-    {% endif %}
 </form>
+
+{% if user %}
+<hr style="border:none;border-top:1px solid #e5e7eb;margin:1.25rem 0;">
+
+<div class="player-card clearfix">
+    <div class="page-header" style="margin-top:.25rem; padding-bottom:.4rem;">
+        <h1>Player information</h1>
+    </div>
+
+    <div class="card-name">
+        {{user['name']}}
+        <span class="meta-tag">UID: {{user['user_id']}}</span>
+        <span class="meta-tag">User code: {{user['user_code']}}</span>
+        {% if user['ban_flag'] %}<span class="meta-tag banned-badge">Banned</span>{% endif %}
+    </div>
+
+    <div class="card-join-date">Registered in: {{user['join_date']}}</div>
+
+    <div style="margin-top:.35em;">
+        Memories: <span class="ptt-value">{{user['ticket']}}</span><br>
+        PTT: <span class="ptt-value">{{'%0.2f'|format(user['rating_ptt']/100|float)}}</span><br>
+        Best 30 PTT: {{bestptt}}<br>
+        Recent 10 PTT: {{recentptt}}
+    </div>
+
+    {% if user.get('song_id') %}
+    <div style="margin-top:.75em; font-size:.84rem; color:#6b7280;">Recent plays:</div>
+
+    <div class="score-row" style="margin-top:.35em;">
+        <span class="song-title">{{user['song_id']}}</span>
+
+        {% if user['difficulty'] == 0 %}<span class="diff-badge diff-pst">PST</span>{% elif user['difficulty'] == 1
+        %}<span class="diff-badge diff-prs">PRS</span>{% elif user['difficulty'] == 2 %}<span
+            class="diff-badge diff-ftr">FTR</span>{% elif user['difficulty'] == 4 %}<span
+            class="diff-badge diff-etr">ETR</span>{% else %}<span class="diff-badge diff-byd">BYD</span>{% endif %}
+
+        <table class="score-detail-table" style="margin-top:.35em;">
+            <tbody>
+                <tr>
+                    <td>PURE:</td>
+                    <td>{{user['perfect_count']}} {{ '(' ~ user['shiny_perfect_count'] ~ ')' }}</td>
+                </tr>
+                <tr>
+                    <td>FAR:</td>
+                    <td>{{user['near_count']}}</td>
+                </tr>
+                <tr>
+                    <td>LOST:</td>
+                    <td>{{user['miss_count']}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="score-score-val">{{user['score']}}</div>
+
+        {% if user['clear_type'] == 3 %}<span class="clear-type-label">Pure Memory</span>{% elif user['clear_type'] == 2
+        %}<span class="clear-type-label">Full Recall</span>{% elif user['clear_type'] == 5 %}<span
+            class="clear-type-label">Hard Clear</span>{% elif user['clear_type'] == 1 %}<span
+            class="clear-type-label">Normal Clear</span>{% elif user['clear_type'] == 4 %}<span
+            class="clear-type-label">Easy Clear</span>{% else %}<span class="clear-type-label">Track Lost</span>{% endif
+        %}
+
+        <div class="rating-label">Rating: {{user['rating']}}</div>
+        <div class="date-label">{{user['time_played']}}</div>
+    </div>
+    {% endif %}
+</div>
+
+<hr style="border:none;border-top:1px solid #e5e7eb;margin:1.25rem 0;">
+
+{% if posts %}
+<div class="page-header" style="margin-top:.25rem; padding-bottom:.4rem;">
+    <h1>Best 30</h1>
+</div>
+{% endif %}
+
+<div class="card-list">
+    {% for post in posts %}
+    <div class="score-row clearfix">
+        <span class="song-title">{{post['song_id']}}</span>
+
+        {% if post['difficulty'] == 0 %}<span class="diff-badge diff-pst">PST</span>{% elif post['difficulty'] == 1
+        %}<span class="diff-badge diff-prs">PRS</span>{% elif post['difficulty'] == 2 %}<span
+            class="diff-badge diff-ftr">FTR</span>{% else %}<span class="diff-badge diff-byd">BYD</span>{% endif %}
+
+        <span class="meta-tag">{{'#' ~ post['rank']}}</span>
+
+        <table style="margin-top:.35em; font-size:.8rem;" cellpadding="0" cellspacing="0">
+            <tbody>
+                <tr>
+                    <td>PURE: </td>
+                    <td>{{post['perfect_count']}} {{ '(' ~ post['shiny_perfect_count'] ~ ')' }}</td>
+                </tr>
+                <tr>
+                    <td>FAR: </td>
+                    <td>{{post['near_count']}}</td>
+                </tr>
+                <tr>
+                    <td>LOST: </td>
+                    <td>{{post['miss_count']}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="score-score-val">{{post['score']}}</div>
+
+        {% if post['clear_type'] == 3 %}<span class="clear-type-label">Pure Memory</span>{% elif post['clear_type'] == 2
+        %}<span class="clear-type-label">Full Recall</span>{% elif post['clear_type'] == 5 %}<span
+            class="clear-type-label">Hard Clear</span>{% elif post['clear_type'] == 1 %}<span
+            class="clear-type-label">Normal Clear</span>{% elif post['clear_type'] == 4 %}<span
+            class="clear-type-label">Easy Clear</span>{% else %}<span class="clear-type-label">Track Lost</span>{% endif
+        %}
+        <span style="margin-left:1.875em;" class="clear-type-label">{% if post['best_clear_type'] == 3 %}(Pure Memory){%
+            elif post['best_clear_type'] == 2 %}(Full Recall){% elif post['best_clear_type'] == 5 %}(Hard Clear){% elif
+            post['best_clear_type'] == 1 %}(Normal Clear){% elif post['best_clear_type'] == 4 %}(Easy Clear){% else
+            %}(Track Lost){% endif %}</span>
+
+        <div class="rating-label">Rating: {{post['rating']}}</div>
+        <div class="date-label">{{post['time_played']}}</div>
+    </div>
+    {% if not loop.last %}<br>{% endif %}
+    {% endfor %}
+</div>
+
+<hr style="border:none;border-top:1px solid #e5e7eb;margin:1.25rem 0;">
+
+{% if recent %}
+<div class="page-header" style="margin-top:.25rem; padding-bottom:.4rem;">
+    <h1>Recent 30</h1>
+</div>
+<div class="card-list">
+    {% for i in recent %}
+    {% if i %}
+    <div class="score-row clearfix">
+        <span class="song-title">{{i['song_id']}}</span>
+
+        {% if i['difficulty'] == 0 %}<span class="diff-badge diff-pst">PST</span>{% elif i['difficulty'] == 1 %}<span
+            class="diff-badge diff-prs">PRS</span>{% elif i['difficulty'] == 2 %}<span
+            class="diff-badge diff-ftr">FTR</span>{% elif i['difficulty'] == 4 %}<span
+            class="diff-badge diff-etr">ETR</span>{% else %}<span class="diff-badge diff-byd">BYD</span>{% endif %}
+
+        <span class="meta-tag">{{loop.index}}</span>
+        <div class="rating-label">Rating: {{i['rating']}}</div>
+    </div>
+    {% if not loop.last %}<br>{% endif %}
+    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
+{% endif %}
+
 {% endblock %}

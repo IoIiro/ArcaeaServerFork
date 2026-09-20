@@ -1,24 +1,20 @@
 {% extends 'base.html' %}
-{% block header %}
-<h1>{% block title %}Redeem - {{code}}{% endblock %}</h1>
-{% endblock %}
+{% block title %}Redeem — {{code}}{% endblock %}
 
 {% block content %}
 {% if posts %}
-{% for user in posts %}
-
-<div id="user-info">
-    <div class="name">{{user['name']}}
-        <span class="rank">UID: {{user['user_id']}}</span>
-        <span class="rank">User code: {{user['user_code']}}</span>
+<div class="card-list">
+    {% for user in posts %}
+    <div class="player-card" style="margin-bottom:.5rem;">
+        <span class="name">{{user['name']}}</span>
+        &nbsp;
+        <span class="meta-tag">UID: {{user['user_id']}}</span>
+        <span class="meta-tag">User code: {{user['user_code']}}</span>
     </div>
+    {% endfor %}
 </div>
-{% if not loop.last %}
-<br />
 {% endif %}
-{% endfor %}
 
-{% endif %}
-<br />
-<a href="{{ url_for('index.all_redeem') }}">Back</a>
+<br><a href="{{ url_for('index.all_redeem') }}">← Back to all redeem codes</a>
+
 {% endblock %}

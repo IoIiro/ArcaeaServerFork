@@ -1,65 +1,46 @@
 {% extends 'base.html' %}
-{% block header %}
-<h1>{% block title %}All purchases{% endblock %}</h1>
-{% endblock %}
+{% block title %}All purchases{% endblock %}
 
 {% block content %}
-{% if posts %}<br />
-{% for item in posts %}
+{% if posts %}
+<div class="card-list">
+    {% for item in posts %}
+    <div class="data-card">
+        <div><span class="field-label">Name:</span> <span class="field-value"
+                style="font-weight:600;">{{item['purchase_name']}}</span></div>
+        <div style="margin-top:.25em;"><span class="field-label">Price:</span> {{item['price']}}</div>
+        <div style="margin-top:.25em;"><span class="field-label">Original price:</span> {{item['orig_price']}}</div>
+        <div><span class="field-label">Discount from:</span> {{item['discount_from']}}
+            <div style="margin-top:.25em;"><span class="field-label">Discount to:</span> {{item['discount_to']}}</div>
+            <div><span class="field-label">Purchase with exchange certificate:</span> {{item['discount_reason']}}</div>
 
-<div class="char-item">
-    <span>Name: </span>
-    <span class="name">{{item['purchase_name']}}</span>
-    <br />
-
-    <span>Price: </span>
-    <span class="char-num">{{item['price']}}</span>
-    <br />
-
-    <span>Original price: </span>
-    <span class="char-num">{{item['orig_price']}}</span>
-    <br />
-
-    <span>Discount from: </span>
-    <span class="char-num">{{item['discount_from']}}</span>
-    <br />
-
-    <span>Discount to: </span>
-    <span class="char-num">{{item['discount_to']}}</span>
-    <br />
-
-    <span>Whether it is allowed to purchase with exchange certificate: </span>
-    <span class="char-num">{{item['discount_reason']}}</span>
-    <br />
-    {% if item['items'] %}<br />
-    {% for x in item['items'] %}
-    <span>Item id: </span>
-    <span class="char-num">{{x['item_id']}}</span>
-    <br />
-
-    <span>Item type: </span>
-    <span class="char-num">{{x['type']}}</span>
-    <br />
-
-    <span>Amount: </span>
-    <span class="char-num">{{x['amount']}}</span>
-    <br />
-
-
-
+            {% if item.get('items') %}
+            <table style="margin-top:.5em; font-size:.84rem;" cellpadding="0" cellspacing="0">
+                <tbody>
+                    {% for x in item['items'] %}
+                    <tr>
+                        <td>Item id: </td>
+                        <td>{{x['item_id']}} &nbsp;&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Type: </td>
+                        <td>{{x['type']}} &nbsp;&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Amount: </td>
+                        <td>{{x['amount']}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
     {% if not loop.last %}
-    <br />
+    <hr style="border:none;border-top:1px solid #e5e7eb;margin:.4rem 0;">
     {% endif %}
     {% endfor %}
-    {% endif %}
-
 </div>
-{% if not loop.last %}
-<br />
-<hr />
-<br />
 {% endif %}
-{% endfor %}
 
-{% endif %}
 {% endblock %}

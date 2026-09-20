@@ -1,23 +1,80 @@
 <!doctype html>
-<title>{% block title %}{% endblock %} - Arcaea Server</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<nav>
-    <h1>Arcaea Server</h1>
-    <ul>
-        {% if g.user %}
-        <li><span>{{ g.user['username'] }}</span>
-        <li><a href="{{ url_for('index.index') }}">Home</a>
-        <li><a href="{{ url_for('login.logout') }}">Log Out</a> {% else %}
-        <li><a href="{{ url_for('login.login') }}">Log In</a> {% endif %}
-    </ul>
-</nav>
-<section class="content">
-    <header>
-        {% block header %}{% endblock %}
-    </header>
-    {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-    {% endfor %} {% block content %}{% endblock %}
-</section>
+<html lang="ko">
 
-<footer id="footer" class="footer">Made by Lost@2020-2022</footer>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %} — Arcaea Server</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <h1 class="site-title"><a href="{{ url_for('index.index') }}">Arcaea Server</a></h1>
+
+            <!-- Hamburger button -->
+            <button id="nav-toggle" type="button" aria-label="Toggle navigation">
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+            </button>
+
+            <!-- User nav (hidden by default) -->
+            <nav id="user-nav" class="user-nav">
+                {% if g.user %}
+                <ul>
+                    <li><span>{{ g.user['username'] }}</span></li>
+                    <li><a href="{{ url_for('index.index') }}">Home</a></li>
+                    <li><a href="{{ url_for('login.logout') }}">Log Out</a></li>
+                </ul>
+                {% else %}
+                <ul>
+                    <li><a href="{{ url_for('login.login') }}">Log In</a></li>
+                </ul>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <script>
+        (function () {
+            var toggle = document.getElementById('nav-toggle');
+            var nav = document.getElementById('user-nav');
+
+            if (!toggle || !nav) return;
+
+            toggle.addEventListener('click', function (e) {
+                e.preventDefault();
+                nav.classList.toggle('open');
+                toggle.classList.toggle('open');
+            });
+        })();
+    </script>
+
+
+    <main class="content">
+
+        <section class="page-header">
+            <h1>{% block page_title %}{{ self.title() }}{% endblock %}</h1>
+        </section>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+
+    </main>
+
+</body>
+
+</html>

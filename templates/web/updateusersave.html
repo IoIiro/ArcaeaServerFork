@@ -1,30 +1,32 @@
 {% extends 'base.html' %}
-{% block header %}
-<h1>{% block title %}Update users' saves{% endblock %}</h1>
-{% endblock %}
+{% block title %}Update users' saves{% endblock %}
 
 {% block content %}
-<form action="/web/updateusersave" method="post">
-    <div class="title">Update one user's saves to the database</div>
+<form class="form-block" action="/web/updateusersave" method="post">
+    <div class="form-title">Update one user's saves to the database</div>
+
     <label for="name">Arcaea Username</label>
-    <input name="name" id="name">
-    or<br />
+    <input name="name" id="name"><br><span style="font-size:.84rem; color:#6b7280;">or</span><br>
+
     <label for="user_code">Arcaea User Code</label>
-    <input name="user_code" id="user_code">
-    <br />
+    <input name="user_code" id="user_code"><br><br>
 
     <input type="submit" value="Update">
 </form>
-<br />
-<hr />
-<form action="/web/updateusersave" method="post">
-    <div class="title">Update all users' saves to the database</div>
-    <br />
+
+<form class="form-block" action="/web/updateusersave" method="post">
+    <div class="form-title">Update all users' saves to the database</div>
+
     <input type="submit" value="Update all">
 
-    <div class="content">这里会将用户上传的存档覆盖到best_score表中，请注意是覆盖，不会进行分数比较。</div>
-    <div class="content">Here you can overlay the saves uploaded by users to best_score table. Please remember that it
-        is an overlay action, so scores will not be compared.</div>
-
+    <table style="margin-top:.75rem; font-size:.84rem;" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td colspan="2">Here you can overlay the saves uploaded by users to best_score table. Please remember
+                    that it is an overlay action, so scores will not be compared.</td>
+            </tr>
+        </tbody>
+    </table>
 </form>
+
 {% endblock %}

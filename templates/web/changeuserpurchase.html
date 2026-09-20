@@ -1,44 +1,35 @@
 {% extends 'base.html' %}
-{% block header %}
-<h1>{% block title %}Change user purchase information{% endblock %}</h1>
-{% endblock %}
+{% block title %}Change user purchase information{% endblock %}
 
 {% block content %}
-<form action="/web/changeuserpurchase/edituser" method="post">
-    <div class="title">Edit the user</div>
+<form class="form-block" action="/web/changeuserpurchase/edituser" method="post">
+    <div class="form-title">Edit the user</div>
+
     <label for="name">Arcaea Username</label>
-    <input name="name" id="name">
-    or<br />
+    <input name="name" id="name"><br><span style="font-size:.84rem; color:#6b7280;">or</span><br>
+
     <label for="user_code">Arcaea User Code</label>
-    <input name="user_code" id="user_code">
-    <br />
-    <br />
+    <input name="user_code" id="user_code"><br><br>
 
-    <div>对所有单曲和曲包的操作 Operation to all singles and packs:
-        <br />
-        <br />
-        <label><input type="radio" name="method" value="0">解锁 Unlock</label>
-        <br />
-        <label><input type="radio" name="method" value="1">封绝 Lock</label>
-    </div>
+    <div style="font-size:.84rem; color:#374151;">Operation to all singles and packs:</div>
+    <div class="radio-group mt-sm">
+        <label><input type="radio" name="method" value="0">Unlock</label>
+        <label style="margin-left:1rem;"><input type="radio" name="method" value="1">Lock (封绝)</label>
+    </div><br><br>
 
-
-    <br />
     <input type="submit" value="Execute">
 </form>
-<br />
-<hr />
-<form action="/web/changeuserpurchase/edituser" method="post">
-    <div class="title">Edit all the users</div>
-    <br />
-    <div>对所有单曲和曲包的操作 Operation to all singles and packs:
-        <br />
-        <br />
-        <label><input type="radio" name="method" value="0">解锁 Unlock</label>
-        <br />
-        <label><input type="radio" name="method" value="1">封绝 Lock</label>
-    </div>
-    <br />
+
+<form class="form-block" action="/web/changeuserpurchase/edituser" method="post">
+    <div class="form-title">Edit all the users</div>
+
+    <div style="font-size:.84rem; color:#374151;">Operation to all singles and packs:</div>
+    <div class="radio-group mt-sm">
+        <label><input type="radio" name="method" value="0">Unlock</label>
+        <label style="margin-left:1rem;"><input type="radio" name="method" value="1">Lock (封绝)</label>
+    </div><br><br>
+
     <input type="submit" value="Execute">
 </form>
+
 {% endblock %}

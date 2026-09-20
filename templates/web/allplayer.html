@@ -1,85 +1,70 @@
 {% extends 'base.html' %}
-{% block header %}
-<h1>{% block title %}All players{% endblock %}</h1>
-{% endblock %}
+{% block title %}All players{% endblock %}
 
 {% block content %}
 {% if posts %}
-{% for user in posts %}
+<div class="card-list">
+    {% for user in posts %}
+    <div class="player-card clearfix">
+        <div class="card-name">
+            {{user['name']}}
+            <span class="meta-tag">UID: {{user['user_id']}}</span>
+            <span class="meta-tag">User code: {{user['user_code']}}</span>
+            {% if user['ban_flag'] %}<span class="meta-tag banned-badge">Banned</span>{% endif %}
+        </div>
 
-<div id="user-info">
-    <div class="name">{{user['name']}}
-        <span class="rank">UID: {{user['user_id']}}</span>
-        <span class="rank">User code: {{user['user_code']}}</span>
-        {% if user['ban_flag'] %}
-        <span class="rank">Banned</span>
+        <div class="card-join-date">Registered in: {{user['join_date']}}</div>
+
+        <div style="margin-top:.35em;">
+            PTT: <span class="ptt-value">{{'%0.2f'|format(user['rating_ptt']/100|float)}}</span><br>
+            Memories: <span class="ptt-value">{{user['ticket']}}</span>
+        </div>
+
+        {% if user.get('song_id') %}
+        <div style="margin-top:.75em; font-size:.84rem; color:#6b7280;">Recent plays:</div>
+
+        <div class="score-row" style="margin-top:.35em;">
+            <span class="song-title">{{user['song_id']}}</span>
+
+            {% if user['difficulty'] == 0 %}<span class="diff-badge diff-pst">PST</span>{% elif user['difficulty'] == 1
+            %}<span class="diff-badge diff-prs">PRS</span>{% elif user['difficulty'] == 2 %}<span
+                class="diff-badge diff-ftr">FTR</span>{% else %}<span class="diff-badge diff-byd">BYD</span>{% endif %}
+
+            <table class="score-detail-table" style="margin-top:.35em;">
+                <tbody>
+                    <tr>
+                        <td>PURE:</td>
+                        <td>{{user['perfect_count']}} {{ '(' ~ user['shiny_perfect_count'] ~ ')' }}</td>
+                    </tr>
+                    <tr>
+                        <td>FAR:</td>
+                        <td>{{user['near_count']}}</td>
+                    </tr>
+                    <tr>
+                        <td>LOST:</td>
+                        <td>{{user['miss_count']}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="score-score-val">{{user['score']}}</div>
+
+            {% if user['clear_type'] == 3 %}<span class="clear-type-label">Pure Memory</span>{% elif user['clear_type']
+            == 2 %}<span class="clear-type-label">Full Recall</span>{% elif user['clear_type'] == 5 %}<span
+                class="clear-type-label">Hard Clear</span>{% elif user['clear_type'] == 1 %}<span
+                class="clear-type-label">Normal Clear</span>{% elif user['clear_type'] == 4 %}<span
+                class="clear-type-label">Easy Clear</span>{% else %}<span class="clear-type-label">Track Lost</span>{%
+            endif %}
+
+            <div class="rating-label">Rating: {{user['rating']}}</div>
+            <div class="date-label">{{user['time_played']}}</div>
+        </div>
         {% endif %}
     </div>
-    <div class="join-date">注册于 Registered in: {{user['join_date']}}</div>
-    <div class="ptt">PTT: {{'%0.2f'|format(user['rating_ptt']/1000|float)}}</div>
-    <div class="ptt">Memories: {{user['ticket']}}</div>
-    <div>
-        <div>Recent plays: </div>
-        <div>
-            <div class="score-item">
-                <span class="song-title">
-                    {{user['song_id']}}
-                </span>
-                {% if user['difficulty'] == 0 %}
-                <span class="difficulty_pst">PST</span>
-                {% elif user['difficulty'] == 1 %}
-                <span class="difficulty_prs">PRS</span>
-                {% elif user['difficulty'] == 2 %}
-                <span class="difficulty_ftr">FTR</span>
-                {% else %}
-                <span class="difficulty_byd">BYD</span>
-                {% endif %}
-
-                <div class="song-detail">
-                    <br />
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>PURE: </td>
-                                <td>{{user['perfect_count']}}</td>
-                                <td> {{'(' ~ user['shiny_perfect_count'] ~ ')'}}</td>
-                            </tr>
-                            <tr>
-                                <td>FAR: </td>
-                                <td>{{user['near_count']}}</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>LOST: </td>
-                                <td>{{user['miss_count']}}</td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="song-score">{{user['score']}}</div>
-                <div class="song-clear-type">
-                    {% if user['clear_type'] == 3 %}Pure Memory
-                    {% elif user['clear_type'] == 2 %}Full Recall
-                    {% elif user['clear_type'] == 5 %}Hard Clear
-                    {% elif user['clear_type'] == 1 %}Normal Clear
-                    {% elif user['clear_type'] == 4 %}Easy Clear
-                    {% else%}Track Lost
-                    {% endif %}
-                </div>
-                <div class="song-rating">成绩评价 Rating: {{user['rating']}}</div>
-                <div class="song-clear-date">日期 Date:
-                    {{user['time_played']}}
-                </div>
-            </div>
-        </div>
-    </div>
+    {% if not loop.last %}
+    <hr style="border:none;border-top:1px solid #e5e7eb;margin:.6rem 0;">{% endif %}
+    {% endfor %}
 </div>
-{% if not loop.last %}
-<hr />
-<br />
 {% endif %}
-{% endfor %}
 
-{% endif %}
 {% endblock %}

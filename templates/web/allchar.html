@@ -1,87 +1,30 @@
 {% extends 'base.html' %}
-{% block header %}
-<h1>{% block title %}All characters{% endblock %}</h1>
-{% endblock %}
+{% block title %}All characters{% endblock %}
 
 {% block content %}
-{% if posts %}<br />
-{% for char in posts %}
+{% if posts %}
+<div class="card-list">
+    {% for char in posts %}
+    <div class="data-card" style="font-size:.9rem;">
+        <div><span class="field-label">Id:</span> {{char['character_id']}}</div>
+        <div style="margin-top:.25em;"><span class="field-label">Name:</span> <strong>{{char['name']}}</strong></div>
+        <div><span class="field-label">Max level:</span> {{char['max_level']}}</div>
 
-<div class="char-item">
-    <span>Id: </span>
-    <span class="char-id">{{char['character_id']}}</span>
-    <br />
+        <div style="margin-top:.6rem;">Frag-level 1:&nbsp;&nbsp;{{char['frag1']}} &nbsp;&nbsp;<br>Prog-level
+            1:&nbsp;&nbsp;{{char['prog1']}} &nbsp;&nbsp;<br>Overdrive-level 1:&nbsp;{{char['overdrive1']}}</div>
+        <div>Frag-level 20:&nbsp;&nbsp;{{char['frag20']}} &nbsp;&nbsp;<br>Prog-level 20:&nbsp;&nbsp;{{char['prog20']}}
+            &nbsp;&nbsp;<br>Overdrive-level 20:&nbsp;{{char['overdrive20']}}</div>
+        <div>Frag-level 30:&nbsp;&nbsp;{{char['frag30']}} &nbsp;&nbsp;<br>Prog-level 30:&nbsp;&nbsp;{{char['prog30']}}
+            &nbsp;&nbsp;<br>Overdrive-level 30:&nbsp;{{char['overdrive30']}}</div>
 
-    <span>Name: </span>
-    <span class="char-name">{{char['name']}}</span>
-    <br />
-
-    <span>Max level: </span>
-    <span class="char-num">{{char['max_level']}}</span>
-    <br />
-
-    <span>Frag-level 1: </span>
-    <span class="char-num">{{char['frag1']}}</span>
-    <br />
-
-    <span>Prog-level 1: </span>
-    <span class="char-num">{{char['prog1']}}</span>
-    <br />
-
-    <span>Overdrive-level 1: </span>
-    <span class="char-num">{{char['overdrive1']}}</span>
-    <br />
-
-    <span>Frag-level 20: </span>
-    <span class="char-num">{{char['frag20']}}</span>
-    <br />
-
-    <span>Prog-level 20: </span>
-    <span class="char-num">{{char['prog20']}}</span>
-    <br />
-
-    <span>Overdrive-level 20: </span>
-    <span class="char-num">{{char['overdrive20']}}</span>
-    <br />
-
-    <span>Frag-level 30: </span>
-    <span class="char-num">{{char['frag30']}}</span>
-    <br />
-
-    <span>Prog-level 30: </span>
-    <span class="char-num">{{char['prog30']}}</span>
-    <br />
-
-    <span>Overdrive-level 30: </span>
-    <span class="char-num">{{char['overdrive30']}}</span>
-    <br />
-
-    <span>Skill id: </span>
-    <span class="char-num">{{char['skill_id']}}</span>
-    <br />
-
-    <span>Skill unlock level: </span>
-    <span class="char-num">{{char['skill_unlock_level']}}</span>
-    <br />
-
-    <span>Uncapped skill id: </span>
-    <span class="char-num">{{char['skill_id_uncap']}}</span>
-    <br />
-
-    <span>Is uncapped: </span>
-    <span class="char-num">{{char['is_uncapped']}}</span>
-    <br />
-
-
-
-
+        <div style="margin-top:.6rem;">Skill id: {{char['skill_id']}} &nbsp;&nbsp; Skill unlock level:
+            {{char['skill_unlock_level']}}, Uncapped skill id: {{char['skill_id_uncap']}} &nbsp;&nbsp; Is uncapped:
+            {{char['is_uncapped']}}</div>
+    </div>
+    {% if not loop.last %}
+    <hr style="border:none;border-top:1px solid #e5e7eb;margin:.4rem 0;">{% endif %}
+    {% endfor %}
 </div>
-{% if not loop.last %}
-<br />
-<hr />
-<br />
 {% endif %}
-{% endfor %}
 
-{% endif %}
 {% endblock %}

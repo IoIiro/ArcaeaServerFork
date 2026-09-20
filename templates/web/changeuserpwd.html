@@ -1,24 +1,23 @@
 {% extends 'base.html' %}
-{% block header %}
-<h1>{% block title %}Change user password{% endblock %}</h1>
-{% endblock %}
+{% block title %}Change user password{% endblock %}
 
 {% block content %}
-<form action="/web/changeuserpwd" method="post">
-    <div class="title">Edit the user's password</div>
+<form class="form-block" action="/web/changeuserpwd" method="post">
+    <div class="form-title">Edit the user's password</div>
+
     <label for="name">Arcaea Username</label>
-    <input name="name" id="name">
-    or<br />
+    <input name="name" id="name"><br><span style="font-size:.84rem; color:#6b7280;">or</span><br>
+
     <label for="user_code">Arcaea User Code</label>
-    <input name="user_code" id="user_code">
-    <br />
-    <br />
+    <input name="user_code" id="user_code"><br><br>
 
     <label for="pwd">Password</label>
-    <input type="password" name="pwd" id="pwd" required>
+    <input type="password" name="pwd" id="pwd" required autocomplete="new-password"><br>
+
     <label for="pwd2">Enter again</label>
-    <input type="password" name="pwd2" id="pwd2" required>
-    
+    <input type="password" name="pwd2" id="pwd2" required autocomplete="new-password"><br><br>
+
     <input type="submit" value="Edit">
 </form>
+
 {% endblock %}
